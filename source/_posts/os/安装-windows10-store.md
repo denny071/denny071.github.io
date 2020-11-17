@@ -1,7 +1,8 @@
 ---
 title: 安装_windows10_store
 date: 2020-08-27 14:42:47
-tags: window10
+tags: win10
+categories: os
 ---
 
 

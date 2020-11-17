@@ -2,6 +2,7 @@
 title: 将macos的python进行升级
 date: 2020-08-27 14:41:19
 tags: python
+categories: os
 ---
 ```
 sudo mv /Library/Frameworks/Python.framework/Versions/3.7 /System/Library/Frameworks/Python.framework/Versions

@@ -1,11 +1,9 @@
 ---
 title: centos7+nginx+rtmp+ffmpeg搭建流媒体服务器
-tags: ['rtmp']
-copyright: true
+tags: rtmp
 date: 2019-01-02 15:48:26
-categories: rtmp
-description:
-image:
+categories: ffmpeg
+description: 搭建流媒体服务器
 ---
 
 ![](09205239-1a57826acfd744918e6737023881a897-20201117153853337.jpg)

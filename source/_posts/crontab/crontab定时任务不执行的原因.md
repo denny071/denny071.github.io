@@ -2,6 +2,7 @@
 title: crontab定时任务不执行的原因
 date: 2020-08-27 14:41:28
 tags: crontab
+categories: tools
 ---
 ### 1 crond服务未启动
 

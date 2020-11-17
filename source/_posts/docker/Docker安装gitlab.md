@@ -1,7 +1,8 @@
 ---
 title: Docker安装gitlab
 date: 2020-08-27 14:42:02
-tags: docker
+tags: gitlab
+categories: docker
 ---
 
 ```

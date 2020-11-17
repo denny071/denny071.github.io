@@ -1,7 +1,8 @@
 ---
 title: 基于crontab的mysql数据库备份
 date: 2020-08-27 14:44:22
-Tags: crontab,mysql
+tags: [crontab,mysql]
+categories: mysql
 ---
 #### 创建目录
 ```
@@ -35,6 +36,9 @@ chmod u+x backup_demoDatabase.sh
 crontab -e
 ```
 ##### 编辑内容
+
+
+
 ```bash 
 */1 * * * * /home/backup/backup_demoDatabase
 ```
