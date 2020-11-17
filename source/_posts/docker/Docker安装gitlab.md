@@ -1,12 +1,12 @@
 ---
 title: Docker安装gitlab
 date: 2020-08-27 14:42:02
-tags:
+tags: docker
 ---
- 
+
 ```
   sudo apt install docker.io 
- ```
+```
 #### 添加加速器
 ```
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io

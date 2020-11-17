@@ -1,7 +1,7 @@
 ---
 title: MacOS文件夹名称实现本地化方法
 date: 2020-08-27 14:44:12
-tags:
+tags: macos
 ---
 ### 方法步骤
 

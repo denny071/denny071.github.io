@@ -1,7 +1,7 @@
 ---
 title: 在Ubuntu中安装chrome和chromedriver
 date: 2020-08-27 14:39:26
-tags:
+tags: chrome
 ---
 **下载chrome**
 ```
@@ -28,4 +28,3 @@ cp chromedriver /usr/local/bin/
 ```
 chmod +x /usr/local/bin/chromedriver
 ```
- 

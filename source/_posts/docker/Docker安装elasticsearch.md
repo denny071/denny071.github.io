@@ -1,8 +1,11 @@
 ---
 title: Docker安装elasticsearch
 date: 2020-08-27 14:43:37
-tags:
+Tags: docker
 ---
+
+### 执行命令
+
 ```ssh 
 docker run -d --name elasticsearch  --privileged -p 9200:9200 -p 9300:9300   elasticsearch:6.8.6
 ```

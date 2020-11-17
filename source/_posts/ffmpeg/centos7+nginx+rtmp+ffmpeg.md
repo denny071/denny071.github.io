@@ -7,11 +7,10 @@ categories: rtmp
 description:
 image:
 ---
-<p class="description">centos7+nginx+rtmp+ffmpeg搭建流媒体服务器</p>
 
-<img src="http://images0.cnblogs.com/blog/254714/201312/09205239-1a57826acfd744918e6737023881a897.jpg" alt="" style="width:100%" />
+![](09205239-1a57826acfd744918e6737023881a897-20201117153853337.jpg)
 
-<!-- more -->
+
 
 
 ### 1.安装前需要的工具

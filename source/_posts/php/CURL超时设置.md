@@ -1,7 +1,7 @@
 ---
 title: CURL超时设置
 date: 2020-08-27 14:43:09
-tags:
+tags: curl
 ---
 
 > CURLOPT_CONNECTTIMEOUT 用来告诉 PHP 在成功连接服务器前等待多久（连接成功之后就会开始缓冲输出），这个参数是为了应对目标服务器的过载，下线，或者崩溃等可能状况。
