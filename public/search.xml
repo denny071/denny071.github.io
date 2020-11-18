@@ -606,7 +606,7 @@
         <category>os</category>
       </categories>
       <tags>
-        <tag>Ubuntu</tag>
+        <tag>ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -797,6 +797,249 @@
       </categories>
       <tags>
         <tag>brew</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Alpine镜像使用</title>
+    <url>/2020/11/01/docker/Alpine%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="Alpine镜像使用"><a href="#Alpine镜像使用" class="headerlink" title="Alpine镜像使用"></a>Alpine镜像使用</h2><p>alpine镜像在构建镜像过程中作为基础镜像占比越来越高，下面是alpine镜像中包管理工具apk使用相关示例：</p>
+<ol>
+<li>apk –help命令查看完整的包管理命令。</li>
+<li>apk update：从远程镜像源中更新本地镜像源索引</li>
+<li>apk add：安装PACKAGES并自动解决依赖关系，也可以从第三方仓库添加软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk add  nmap vim</span><br><span class="line"></span><br><span class="line">apk add --no-cache mysql-client</span><br><span class="line"></span><br><span class="line">apk add docker --update-cache --repository http://mirrors.ustc.edu.cn/alpine/v3.4/main/ --allow-untrusted</span><br></pre></td></tr></table></figure>
+安装指定版本软件包:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk add  nmap=7.70-r3</span><br></pre></td></tr></table></figure></li>
+<li>apkupgrade 升级软件包<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk upgrade （升级所有软件报）</span><br><span class="line">apk add --upgrade nmap（指定软件升级）</span><br></pre></td></tr></table></figure></li>
+<li>apk del 卸载并删除PACKAGES<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk del nmap</span><br></pre></td></tr></table></figure></li>
+<li>apk search 命令搜索可用软件包，-v 参数输出描述内容，支出通配符，-d 或 –description 参数指定通过软件包描述查询。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk search <span class="comment">#查找所有可用软件包</span></span><br><span class="line">apk search -v <span class="comment">#查找所有可用软件包及其描述内容</span></span><br><span class="line">apk search -v <span class="string">&#x27;acf*&#x27;</span> <span class="comment">#通过软件包名称查找软件包</span></span><br><span class="line">apk search -v -d <span class="string">&#x27;docker&#x27;</span> <span class="comment">#通过描述文件查找特定的软件包</span></span><br></pre></td></tr></table></figure></li>
+<li>apk info：列出PACKAGES或镜像源的详细信息<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk info <span class="comment">#列出所有已安装的软件包</span></span><br><span class="line">apk info -a zlib <span class="comment">#显示完整的软件包信息</span></span><br><span class="line">apk info --who-owns /sbin/lbu <span class="comment">#显示指定文件属于的包</span></span><br></pre></td></tr></table></figure></li>
+<li>清理akp缓存:rm -rf /var/cache/apk/*</li>
+<li>apk使用阿里云的源<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">&#x27;s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g&#x27;</span> /etc/apk/repositories</span><br></pre></td></tr></table></figure></li>
+<li>添加用户<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addgroup -g 1000 -S demo</span><br><span class="line">adduser demo -D -G demo -u 1000</span><br></pre></td></tr></table></figure></li>
+<li>alpine内编译安装lrzsz<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk update</span><br><span class="line">apk add wget gcc g++ make</span><br><span class="line">wget https://ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz</span><br><span class="line">tar -xf lrzsz-0.12.20.tar.gz</span><br><span class="line"><span class="built_in">cd</span> lrzsz-0.12.20/</span><br><span class="line">./configure</span><br><span class="line">make; make install</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/bin/lrz /usr/<span class="built_in">local</span>/bin/rz</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/bin/lsz /usr/<span class="built_in">local</span>/bin/sz</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>apline</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker安装rabbitmq</title>
+    <url>/2020/10/26/docker/docker%E5%AE%89%E8%A3%85rabbitmq/</url>
+    <content><![CDATA[<h3 id="获取镜像"><a href="#获取镜像" class="headerlink" title="获取镜像"></a>获取镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#指定版本，该版本包含了web控制页面</span></span><br><span class="line">docker pull rabbitmq:management</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#方式一：默认guest 用户，密码也是 guest</span></span><br><span class="line">docker run -d --hostname my-rabbit --name rabbit -p 15672:15672 -p 5672:5672 rabbitmq:management</span><br><span class="line"></span><br><span class="line"><span class="comment">#方式二：设置用户名和密码</span></span><br><span class="line">docker run -d --hostname my-rabbit --name rabbit -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password -p 15672:15672 -p 5672:5672 rabbitmq:management</span><br></pre></td></tr></table></figure>
+
+<h3 id="访问UI页面"><a href="#访问UI页面" class="headerlink" title="访问UI页面"></a>访问UI页面</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">http://localhost:15672/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/26/docker/docker%E5%AE%89%E8%A3%85rabbitmq/1449147-20190720164053275-1039971470.png" alt="1449147-20190720164053275-1039971470"></p>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>rabbitmq</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker搭建项目管理系统redmine</title>
+    <url>/2020/10/27/docker/docker%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fredmine/</url>
+    <content><![CDATA[<p>Redmine是一个跨平台的项目管理系统，它通过项目的形式把成员、任务、文档、讨论及各种形式的资源组织在一起。这篇文章记录使用Docker搭建Redmine系统的工程。</p>
+<p>使用sameersbn/redmine镜像搭建Redmine服务，项目地址为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">https://github.com/sameersbn/docker-redmine</span><br></pre></td></tr></table></figure>
+
+<p>安装指令如下：</p>
+<p>（1）启动postgresql</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name=postgresql-redmine -d --env=<span class="string">&#x27;DB_NAME=redmine_production&#x27;</span> --env=<span class="string">&#x27;DB_USER=redmine&#x27;</span> --env=<span class="string">&#x27;DB_PASS=password&#x27;</span> sameersbn/postgresql:9.4-12</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：<img src="/2020/10/27/docker/docker%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fredmine/B401FDDC-A680-45D3-81D0-B790A3A49216.png" alt="B401FDDC-A680-45D3-81D0-B790A3A49216"></p>
+<p>（2）启动redmine</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --name=redmine -d --link=postgresql-redmine:postgresql --publish=10083:80 --env=<span class="string">&#x27;REDMINE_PORT=10083&#x27;</span> sameersbn/redmine:3.2.0-4</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/2020/10/27/docker/docker%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fredmine/09FC17E6-BA0D-46D9-8A57-BC3386D4DE45.png" alt="09FC17E6-BA0D-46D9-8A57-BC3386D4DE45"></p>
+<p>（3）测试Redmine</p>
+<p>在Docker指令中，把对外服务的端口映射到了10083，可以通过IP+端口进行访问。</p>
+<p>获取IP地址：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker-machine ip</span><br></pre></td></tr></table></figure>
+
+<p>可以获得我的IP地址是：192.168.99.100</p>
+<p>所以可以通过地址：<code>http://192.168.99.100:10083</code>， 进行访问，界面如下：</p>
+<p><img src="/2020/10/27/docker/docker%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fredmine/1F45C6CF-FC4A-4463-87D4-D26771CDD182-5665839.png" alt="1F45C6CF-FC4A-4463-87D4-D26771CDD182-5665839"></p>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>redmine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IT术语解读</title>
+    <url>/2020/10/28/note/IT%E6%9C%AF%E8%AF%AD%E8%A7%A3%E8%AF%BB/</url>
+    <content><![CDATA[<h3 id="冷备份"><a href="#冷备份" class="headerlink" title="冷备份"></a>冷备份</h3><p>假设你是个妹子，你有一位男朋友，于此同时你和另外一位男生暧昧不清，比朋友好，又不是恋人。你随时可以甩了现任男友，另外一位马上就能补上。这是冷备份。</p>
+<h3 id="双机热备份"><a href="#双机热备份" class="headerlink" title="双机热备份"></a>双机热备份</h3><p>假设你是个妹子，同时和两位男性在交往，两位都是你男朋友。并且他们还互不干涉，独立运行。这就是双机热备份。</p>
+<h3 id="异地容灾备份"><a href="#异地容灾备份" class="headerlink" title="异地容灾备份"></a>异地容灾备份</h3><p>假设你是个妹子，不安于男朋友给你的安全感。在遥远的男友未知的地方，和一位男生保持着联系，你告诉他你没有男朋友，你现在处于纠结期，一旦你和你男朋友分开了，你马上可以把自己感情转移到异地男人那里去。这是异地容灾备份。</p>
+<h3 id="云备份"><a href="#云备份" class="headerlink" title="云备份"></a>云备份</h3><p>假设你是个妹子，有一位男朋友，你又付了钱给一家婚姻介绍所，让他帮你留意好的资源，一旦你和你这位男朋友分开，婚姻介绍所马上给你安排资源，你感情不间断运行，这是云备份。。。。</p>
+<h3 id="灾难演练"><a href="#灾难演练" class="headerlink" title="灾难演练"></a>灾难演练</h3><p>假设你是个妹子，你怀疑男朋友对你的忠诚，在某宝购买了一个测试忠诚度的服务。这是灾难演练。友情提醒，在没有备份的情况下，切忌进行灾难演练，说不好会让你数据血本无归。</p>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>假设你是个妹子，你和男友异地恋，你每天晚上都打电话查岗，问他还爱不爱你了，这叫ping。</p>
+<h3 id="TraceRoute"><a href="#TraceRoute" class="headerlink" title="TraceRoute"></a>TraceRoute</h3><p>假设你是个妹子，你的男友经常玩失踪，所以你希望时刻掌握他的行踪，你先打电话给他的好基友A，A说好基友B知道，B说好基友C知道，C说好基友D知道，D说你男朋友正在网吧打游戏，你终于知道了男友在哪儿，这叫TraceRoute。</p>
+<h3 id="心跳监测"><a href="#心跳监测" class="headerlink" title="心跳监测"></a>心跳监测</h3><p>假设你是个妹子，你的男友沉迷游戏经常不接电话无故宕机，所以当你们约好下午逛街以后你要时不时的打个电话询问，看看他是不是还能正常提供服务，这叫心跳监测。</p>
+<h3 id="故障切换"><a href="#故障切换" class="headerlink" title="故障切换"></a>故障切换</h3><p>假设你是个妹子，你想去逛街而你的男友A在打游戏不接电话，于是乎你把逛街的请求发给了替补男友B，从而保障服务不间断运行，这叫故障切换。</p>
+<h3 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h3><p>假设你是个妹子，你有很多需要男朋友完成的事情，于是乎你跟A逛街旅游吃饭不可描述，而B只能陪你逛街，不能拥有全部男朋友的权利，这叫主从配置 master-slave。</p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>假设你是个妹子，你败家太厉害，以至于你的男友根本吃不消，于是呼你找了两个男朋友，一三五单号，二四六双号限行，从而减少一个男朋友所面临的压力，这叫负载均衡。</p>
+<h3 id="集群LVS"><a href="#集群LVS" class="headerlink" title="集群LVS"></a>集群LVS</h3><p>假设你是个妹子并且有多个男朋友，配合心跳检测与故障切换和负载均衡将会达到极致的体验，这叫集群LVS，注意，当需求单机可以处理的情况下不建议启用集群，会造成大量资源闲置，提高维护成本。</p>
+<h3 id="多集群横向扩容"><a href="#多集群横向扩容" class="headerlink" title="多集群横向扩容"></a>多集群横向扩容</h3><p>假设你是个妹子，你的需求越来越高导致一个男朋友集群已经处理不了了，于是乎你又新增了另外几个，这叫多集群横向扩容，简称multi-cluster grid。</p>
+<h3 id="纵向扩容"><a href="#纵向扩容" class="headerlink" title="纵向扩容"></a>纵向扩容</h3><p>假设你是个妹子，你的男朋友身体瘦弱从而无法满足需求，于是乎你买了很多大补产品帮你男朋友升级，从而提高单机容量，这叫纵向扩容，Scale up。切记，纵向扩容的成本会越来越高而效果越来越不明显。</p>
+<h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><p>假设你是个妹子，你跟男友经常出去游玩，情到深处想做点什么的时候却苦于没有tt，要去超市购买，于是乎你在你们经常去的地方都放置了tt，从而大幅度降低等待时间，这叫CDN。</p>
+<h3 id="拒绝服务攻击"><a href="#拒绝服务攻击" class="headerlink" title="拒绝服务攻击"></a>拒绝服务攻击</h3><p>假设你是个妹子,你的男朋友英俊潇洒风流倜傥财大气粗对你唯一,于是乎你遭到了女性B的敌视，B会以朋友名义在周末请求你男朋友修电脑,修冰箱,占用男朋友大量时间,造成男朋友无法为你服务,这叫拒绝服务攻击,简称DOS。</p>
+<h3 id="DDOS"><a href="#DDOS" class="headerlink" title="DDOS"></a>DDOS</h3><p>假设你是个妹子,你因男朋友被一位女性敌视,但是你男朋友的处理能力十分强大,处理速度已经高于她的请求速度,于是她雇佣了一票女性来轮流麻烦你的男朋友,这叫分布式拒绝服务攻击,简称DDOS。</p>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><p>假设你是个妹子，你发现男朋友总是在处理一些无关紧要的其它请求，于是乎你给男朋友了一个白名单,要求他只处理白名单内的请求，而拒绝其它身份不明的人的要求,这叫访问控制。</p>
+<h3 id="入侵检测系统"><a href="#入侵检测系统" class="headerlink" title="入侵检测系统"></a>入侵检测系统</h3><p>假设你是个妹子，你男朋友风流倜傥，你总担心他出轨，于是你在他身上安装了一个窃听器，里面内置了一些可疑女生勾搭行为的特征库，只要出现疑似被勾搭的情况，就会立刻向你报警，这叫入侵检测系统（IDS）。</p>
+<h3 id="入侵防御系统"><a href="#入侵防御系统" class="headerlink" title="入侵防御系统"></a>入侵防御系统</h3><p>假设你是个妹子，你改良了上面的窃听器，当可疑女性对你男朋友做出勾搭行为的时候，立刻释放1万伏电压，把可疑人击昏，终止这次勾搭。这叫入侵防御系统（IPS）。</p>
+<h3 id="SOC"><a href="#SOC" class="headerlink" title="SOC"></a>SOC</h3><p>假设你是个妹子，虽然你装了各种窃听器、报警器，可是你蓝朋友处处留情，报警器响个不停，让你应接不暇，疲于奔命，于是你搞了个装置集中收集这些出轨告警，进行综合分析，生成你男朋友的出轨报告。这叫SIEM或者SOC。</p>
+<h3 id="等级保护"><a href="#等级保护" class="headerlink" title="等级保护"></a>等级保护</h3><p>假设你是个妹子，你把男朋友的出轨报告提交给他父母，得到了他们的大力支持，男友父母开始对他严加管教、限期整改，为你们的爱情保驾护航，做到合情合理、合法合规，这叫等级保护。</p>
+<h3 id="SDWAN"><a href="#SDWAN" class="headerlink" title="SDWAN"></a>SDWAN</h3><p>假设你是个妹子，你离男朋友家有点远，你开车去，这叫自建专线，你打车过去，这叫租用专线，你骑摩拜单车过去，这叫SDWAN。</p>
+<h3 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h3><p>假设你是个妹子，你和男朋友的恋爱遭到了双方家长的反对，不准双方往来，你们偷偷挖了一条隧道，便于进行幽会，这叫VPN。</p>
+<h3 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h3><p>假设你是个妹子，你的男朋友太优秀而造人窥视，于是乎它们研究了一下你的男朋友，稍微修改了一点点生产出一个男朋友B，与你的男朋友百分制99相似，这不叫剽窃，这叫逆向工程,比如男朋友外挂。</p>
+<h3 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h3><p>假设你是个妹子，你要求你的男朋友坚持十分钟，然后十五分钟继而二十分钟，以测试你男朋友的极限在哪里，这叫压力测试。</p>
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><p>假设你是个妹子，为了保证你男朋友的正常运行，于是乎你每天查看他的微信微博等社交资料来寻找可能产生问题的线索，这叫数据分析。</p>
+<h3 id="并行计算"><a href="#并行计算" class="headerlink" title="并行计算"></a>并行计算</h3><p>假设你是个妹子，你的男朋友属于社交活跃选手，每天的微博知乎微信生产了大量信息，你发现自己的分析速度远远低于他生的速度，于是乎你找来你的闺蜜一起分析，这叫并行计算。</p>
+<h3 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h3><p>假设你是个妹子，你的男朋友太能折腾处处留情产生了天量的待处理信息，你和你的闺蜜们已经累趴也没赶上他创造的速度，于是你付费在知乎上找了20个小伙伴帮你一起分析，这叫云计算。</p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>假设你是个妹子，你在得到男朋友经常出没的地点后，根据酒店，敏感时间段等信息确定男朋友因该是出轨了，这叫数据挖掘。</p>
+<h3 id="精准推送"><a href="#精准推送" class="headerlink" title="精准推送"></a>精准推送</h3><p>假设你是个妹子，在分析男友的数据后，得知他下午又要出去开房，于是乎你在他准备出门前给他发了个短信，问他有没有带tt，没有的话可以在我这里买，这叫精准推送，需要配合数据挖掘。</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>假如你是个妹子，你的男朋友总该出去浪而各种出问题，于是乎你租了间屋子并准备好了所有需要的东西并告诉他，以后不用找酒店了，直接来我这屋子吧，什么都准备好了，这叫容器。</p>
+<h3 id="大数据脱敏和大数据变现"><a href="#大数据脱敏和大数据变现" class="headerlink" title="大数据脱敏和大数据变现"></a>大数据脱敏和大数据变现</h3><p>假如你是个妹子，你决定从不同的男友身上采集数据，你就是大数据中心。有一天你决定生一个宝宝，这叫大数据应用。宝宝生下来不知道是谁的，这叫大数据脱敏。但是从宝宝外观来看，黑色皮肤金色头发，这叫数据融合跨域建模。你决定把这个宝宝拿来展览收点门票，这叫大数据变现。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>note</category>
+      </categories>
+      <tags>
+        <tag>term</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关闭Mac系统的SIP</title>
+    <url>/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/</url>
+    <content><![CDATA[<h3 id="如何查看SIP状态"><a href="#如何查看SIP状态" class="headerlink" title="如何查看SIP状态"></a>如何查看SIP状态</h3><p>在终端中输入csrutil status，就可以看到是enabled还是disabled。（只要显示 disabled 说明已经禁用SIP）<img src="/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/4fdba006ly1g23a3jwla4j211w0qiqbb-768x537.jpg" alt="4fdba006ly1g23a3jwla4j211w0qiqbb-768x537"></p>
+<h3 id="如何关闭SIP"><a href="#如何关闭SIP" class="headerlink" title="如何关闭SIP"></a>如何关闭SIP</h3><ol>
+<li>重启你的Mac，当听到第一声响后（或者说在开机的时候），按住 Command + R键，按住不动，稍待片刻，电脑会进入到恢复模式。</li>
+</ol>
+<p><img src="/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/4fdba006ly1g23a1ikskcj20lc0sgadu.jpg" alt="4fdba006ly1g23a1ikskcj20lc0sgadu"></p>
+<ol start="2">
+<li>进入后打开顶部实用工具–终端</li>
+</ol>
+<p><img src="/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/4fdba006ly1g23cb0k7zyj20of0g6q8x.jpg" alt="4fdba006ly1g23cb0k7zyj20of0g6q8x"></p>
+<ol start="3">
+<li><p>输入命令csrutil disable关闭SIP。 (同样的步骤输入命令csrutil enable，即可重新打开SIP)</p>
+<p><img src="/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/4fdba006ly1g23cdo22wvj20ko0d7wgy.jpg" alt="4fdba006ly1g23cdo22wvj20ko0d7wgy"></p>
+</li>
+<li><p>关闭重启进入系统即可;</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>os</category>
+      </categories>
+      <tags>
+        <tag>macos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>完美解决Mac软件意外退出的方法</title>
+    <url>/2020/10/30/os/%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3Mac%E8%BD%AF%E4%BB%B6%E6%84%8F%E5%A4%96%E9%80%80%E5%87%BA%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>因为Apple苹果公司删除了TNT的证书，所以在2019年7月12日后软件都不能运行了，临时的解决办法，就是自己签名，具体往下看。</p>
+<p><strong>签名：</strong></p>
+<p>打开终端工具输入并执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">codesign --force --deep --sign - /Applications/name.app</span><br></pre></td></tr></table></figure>
+
+<p>注意后面的文件路径，你可以打开访达找到应用程序，找到要签名的软件，直接拖入 终端 界面，即可自动生成路径。</p>
+<p><img src="/2020/10/30/os/%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3Mac%E8%BD%AF%E4%BB%B6%E6%84%8F%E5%A4%96%E9%80%80%E5%87%BA%E7%9A%84%E6%96%B9%E6%B3%95/11438996-afcf20951f712ce2.png" alt="11438996-afcf20951f712ce2"></p>
+<p><strong>如果是手动输入路径，那么，软件名称不能带有空格。</strong></p>
+]]></content>
+      <categories>
+        <category>os</category>
+      </categories>
+      <tags>
+        <tag>macos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux内核调优</title>
+    <url>/2020/10/23/os/Linux%E5%86%85%E6%A0%B8%E8%B0%83%E4%BC%98/</url>
+    <content><![CDATA[<p>为了让系统能够支持更大的并发 优化linux内核也是<strong>重中之重</strong>，以下优化<strong>每一项</strong>都非常非常重要，请务必按逐一完成。</p>
+<p>打开文件 <code>/etc/sysctl.conf</code>，增加以下设置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#该参数设置系统的TIME_WAIT的数量，如果超过默认值则会被立即清除</span></span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 20000</span><br><span class="line"><span class="comment">#定义了系统中每一个端口最大的监听队列的长度，这是个全局的参数</span></span><br><span class="line">net.core.somaxconn = 65535</span><br><span class="line"><span class="comment">#对于还未获得对方确认的连接请求，可保存在队列中的最大数目</span></span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 262144</span><br><span class="line"><span class="comment">#在每个网络接口接收数据包的速率比内核处理这些包的速率快时，允许送到队列的数据包的最大数目</span></span><br><span class="line">net.core.netdev_max_backlog= 30000</span><br><span class="line"><span class="comment">#能够更快地回收TIME-WAIT套接字。此选项会导致处于NAT网络的客户端超时，建议为0</span></span><br><span class="line">net.ipv4.tcp_tw_recycle = 0</span><br><span class="line"><span class="comment">#系统所有进程一共可以打开的文件数量</span></span><br><span class="line">fs.file-max = 6815744</span><br><span class="line"><span class="comment">#防火墙跟踪表的大小。注意：如果防火墙没开则会提示error: &quot;[net.netfilter.nf_conntrack_max](http://net.netfilter.nf_conntrack_max/)&quot; is an unknown key，忽略即可</span></span><br><span class="line">net.netfilter.nf_conntrack_max = 2621440</span><br></pre></td></tr></table></figure>
+<p>运行 <code>sysctl -p</code>即可生效。</p>
+<p><strong>说明：</strong></p>
+<p><code>/etc/sysctl.conf </code>可设置的选项很多，其它选项可以根据自己的环境需要进行设置</p>
+<h2 id="打开文件数"><a href="#打开文件数" class="headerlink" title="打开文件数"></a><strong>打开文件数</strong></h2><p>设置系统打开文件数设置，解决高并发下 too many open files 问题。此选项直接影响单个进程容纳的客户端连接数。</p>
+<p>Soft open files 是Linux系统参数，影响系统单个进程能够打开最大的文件句柄数量，这个值会影响到长连接应用如聊天中单个进程能够维持的用户连接数， 运行ulimit -n能看到这个参数值，如果是1024，就是代表单个进程只能同时最多只能维持1024甚至更少（因为有其它文件的句柄被打开）。如果开启4个进程维持用户连接，那么整个应用能够同时维持的连接数不会超过4*1024个，也就是说最多只能支持4x1024个用户在线可以增大这个设置以便服务能够维持更多的TCP连接。</p>
+<p>Soft open files 修改方法：</p>
+<p>（1）<code>ulimit -HSn 102400</code></p>
+<p>这只是在当前终端有效，退出之后，open files 又变为默认值。</p>
+<p>（2）在/etc/profile文件末尾添加一行<code>ulimit -HSn 102400</code>，这样每次登录终端时，都会自动执行<code>/etc/profile</code>。</p>
+<p>（3）令修改open files的数值永久生效，则必须修改配置文件：<code>/etc/security/limits.conf</code>. 在这个文件后加上：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">\* soft nofile 1024000</span><br><span class="line">\* hard nofile 1024000</span><br><span class="line">root soft nofile 1024000</span><br><span class="line">root hard nofile 1024000</span><br></pre></td></tr></table></figure>
+<p>这种方法需要重启机器才能生效。</p>
+]]></content>
+      <categories>
+        <category>os</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>update与upgrade的作用及区别</title>
+    <url>/2020/10/25/os/update%E4%B8%8Eupgrade%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%8A%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>个LINUX的发行版，比如UBUNTU，都会维护一个自己的软件仓库，我们常用的几乎所有软件都在这里面。这里面的软件绝对安全，而且绝对的能正常安装。</p>
+<p>在UBUNTU下，我们维护一个源列表，源列表里面都是一些网址信息，这每一条网址就是一个源，这个地址指向的数据标识着这台源服务器上有哪些软件可以安装使用。</p>
+<p>编辑源命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<p>在这个文件里加入或者注释（加#）掉一些源后，保存。这时候，我们的源列表里指向的软件就会增加或减少一部分。</p>
+<p>获得最近的软件包的列表:(列表中包含一些包的信息，比如这个包是否更新过)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<p>这个命令，会访问源列表里的每个网址，并读取软件列表，然后保存在本地电脑。软件包管理器里看到的软件列表，都是通过update命令更新的。</p>
+<p>update后，可能需要upgrade一下。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<p>这个命令，会把本地已安装的软件，与刚下载的软件列表里对应软件进行对比，如果发现已安装的软件版本太低，就会提示你更新。如果你的软件都是最新版本，会提示：</p>
+<p>升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 0 个软件包未被升级。</p>
+<p>总而言之，update是更新软件列表，upgrade是更新软件。</p>
+<p>注解：一般在执行 sudo apt-get upgrade 命令之前需要先执行一下 <code>sudo apt-get update </code>—-其实和windows下的软件检测更新是一样的，需要更新的会帮你自动更新并安装好</p>
+<p>在线直接安装的命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install 软件名称</span><br></pre></td></tr></table></figure>
+<p><code>apt-get update</code> 指令会同步使用者端和APT 伺服器的RPM 索引清单（package list），APT 伺服器的RPM 索引清单置于base 资料夹内，使用者端电脑取得base 资料夹内的bz2 RPM 索引清单压缩档后，会将其解压置放于<code>/var/state/apt/lists/</code>，而使用者使用<code>apt-get install</code> 或<code>apt-get dist-upgrade</code> 指令的时候，就会将这个资料夹内的资料和使用者端电脑内的RPM 资料库比对，如此一来就可以知道那些RPM 已安装、未安装、或是可以升级的。</p>
+]]></content>
+      <categories>
+        <category>os</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hyperfcms登录后显示登录失败解决</title>
+    <url>/2020/10/24/php/hyperfcms%E7%99%BB%E5%BD%95%E5%90%8E%E6%98%BE%E7%A4%BA%E7%99%BB%E5%BD%95%E5%A4%B1%E8%B4%A5%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>hyperfcms登录后显示登录失败，是因为配置引起的问题，需要修改配置。</p>
+<p>打开<code>hyperfcms/cms_php/config/autoload/server.php</code></p>
+<p>将 <code>static_handler_locations</code>下面注释 </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// &#x27;static_handler_locations&#x27; =&gt; [&#x27;/&#x27;],</span></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>hyperfcms</tag>
       </tags>
   </entry>
 </search>

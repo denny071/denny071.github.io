@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="冷备份假设你是个妹子，你有一位男朋友，于此同时你和另外一位男生暧昧不清，比朋友好，又不是恋人。你随时可以甩了现任男友，另外一位马上就能补上。这是冷备份。 双机热备份假设你是个妹子，同时和两位男性在交往，两位都是你男朋友。并且他们还互不干涉，独立运行。这就是双机热备份。 异地容灾备份假设你是个妹子，不安于男朋友给你的安全感。在遥远的男友未知的地方，和一位男生保持着联系，你告诉他你没有男朋友，你现在处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IT术语解读">
+<meta property="og:url" content="http://denny071.github.io/2020/10/28/note/IT%E6%9C%AF%E8%AF%AD%E8%A7%A3%E8%AF%BB/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="冷备份假设你是个妹子，你有一位男朋友，于此同时你和另外一位男生暧昧不清，比朋友好，又不是恋人。你随时可以甩了现任男友，另外一位马上就能补上。这是冷备份。 双机热备份假设你是个妹子，同时和两位男性在交往，两位都是你男朋友。并且他们还互不干涉，独立运行。这就是双机热备份。 异地容灾备份假设你是个妹子，不安于男朋友给你的安全感。在遥远的男友未知的地方，和一位男生保持着联系，你告诉他你没有男朋友，你现在处">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-28T02:04:01.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:12:57.418Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="term">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2020/10/28/note/IT%E6%9C%AF%E8%AF%AD%E8%A7%A3%E8%AF%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>IT术语解读 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2020/10/28/note/IT%E6%9C%AF%E8%AF%AD%E8%A7%A3%E8%AF%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          IT术语解读
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-28 10:04:01" itemprop="dateCreated datePublished" datetime="2020-10-28T10:04:01+08:00">2020-10-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-18 10:12:57" itemprop="dateModified" datetime="2020-11-18T10:12:57+08:00">2020-11-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="冷备份"><a href="#冷备份" class="headerlink" title="冷备份"></a>冷备份</h3><p>假设你是个妹子，你有一位男朋友，于此同时你和另外一位男生暧昧不清，比朋友好，又不是恋人。你随时可以甩了现任男友，另外一位马上就能补上。这是冷备份。</p>
+<h3 id="双机热备份"><a href="#双机热备份" class="headerlink" title="双机热备份"></a>双机热备份</h3><p>假设你是个妹子，同时和两位男性在交往，两位都是你男朋友。并且他们还互不干涉，独立运行。这就是双机热备份。</p>
+<h3 id="异地容灾备份"><a href="#异地容灾备份" class="headerlink" title="异地容灾备份"></a>异地容灾备份</h3><p>假设你是个妹子，不安于男朋友给你的安全感。在遥远的男友未知的地方，和一位男生保持着联系，你告诉他你没有男朋友，你现在处于纠结期，一旦你和你男朋友分开了，你马上可以把自己感情转移到异地男人那里去。这是异地容灾备份。</p>
+<h3 id="云备份"><a href="#云备份" class="headerlink" title="云备份"></a>云备份</h3><p>假设你是个妹子，有一位男朋友，你又付了钱给一家婚姻介绍所，让他帮你留意好的资源，一旦你和你这位男朋友分开，婚姻介绍所马上给你安排资源，你感情不间断运行，这是云备份。。。。</p>
+<h3 id="灾难演练"><a href="#灾难演练" class="headerlink" title="灾难演练"></a>灾难演练</h3><p>假设你是个妹子，你怀疑男朋友对你的忠诚，在某宝购买了一个测试忠诚度的服务。这是灾难演练。友情提醒，在没有备份的情况下，切忌进行灾难演练，说不好会让你数据血本无归。</p>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>假设你是个妹子，你和男友异地恋，你每天晚上都打电话查岗，问他还爱不爱你了，这叫ping。</p>
+<h3 id="TraceRoute"><a href="#TraceRoute" class="headerlink" title="TraceRoute"></a>TraceRoute</h3><p>假设你是个妹子，你的男友经常玩失踪，所以你希望时刻掌握他的行踪，你先打电话给他的好基友A，A说好基友B知道，B说好基友C知道，C说好基友D知道，D说你男朋友正在网吧打游戏，你终于知道了男友在哪儿，这叫TraceRoute。</p>
+<h3 id="心跳监测"><a href="#心跳监测" class="headerlink" title="心跳监测"></a>心跳监测</h3><p>假设你是个妹子，你的男友沉迷游戏经常不接电话无故宕机，所以当你们约好下午逛街以后你要时不时的打个电话询问，看看他是不是还能正常提供服务，这叫心跳监测。</p>
+<h3 id="故障切换"><a href="#故障切换" class="headerlink" title="故障切换"></a>故障切换</h3><p>假设你是个妹子，你想去逛街而你的男友A在打游戏不接电话，于是乎你把逛街的请求发给了替补男友B，从而保障服务不间断运行，这叫故障切换。</p>
+<h3 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h3><p>假设你是个妹子，你有很多需要男朋友完成的事情，于是乎你跟A逛街旅游吃饭不可描述，而B只能陪你逛街，不能拥有全部男朋友的权利，这叫主从配置 master-slave。</p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>假设你是个妹子，你败家太厉害，以至于你的男友根本吃不消，于是呼你找了两个男朋友，一三五单号，二四六双号限行，从而减少一个男朋友所面临的压力，这叫负载均衡。</p>
+<h3 id="集群LVS"><a href="#集群LVS" class="headerlink" title="集群LVS"></a>集群LVS</h3><p>假设你是个妹子并且有多个男朋友，配合心跳检测与故障切换和负载均衡将会达到极致的体验，这叫集群LVS，注意，当需求单机可以处理的情况下不建议启用集群，会造成大量资源闲置，提高维护成本。</p>
+<h3 id="多集群横向扩容"><a href="#多集群横向扩容" class="headerlink" title="多集群横向扩容"></a>多集群横向扩容</h3><p>假设你是个妹子，你的需求越来越高导致一个男朋友集群已经处理不了了，于是乎你又新增了另外几个，这叫多集群横向扩容，简称multi-cluster grid。</p>
+<h3 id="纵向扩容"><a href="#纵向扩容" class="headerlink" title="纵向扩容"></a>纵向扩容</h3><p>假设你是个妹子，你的男朋友身体瘦弱从而无法满足需求，于是乎你买了很多大补产品帮你男朋友升级，从而提高单机容量，这叫纵向扩容，Scale up。切记，纵向扩容的成本会越来越高而效果越来越不明显。</p>
+<h3 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h3><p>假设你是个妹子，你跟男友经常出去游玩，情到深处想做点什么的时候却苦于没有tt，要去超市购买，于是乎你在你们经常去的地方都放置了tt，从而大幅度降低等待时间，这叫CDN。</p>
+<h3 id="拒绝服务攻击"><a href="#拒绝服务攻击" class="headerlink" title="拒绝服务攻击"></a>拒绝服务攻击</h3><p>假设你是个妹子,你的男朋友英俊潇洒风流倜傥财大气粗对你唯一,于是乎你遭到了女性B的敌视，B会以朋友名义在周末请求你男朋友修电脑,修冰箱,占用男朋友大量时间,造成男朋友无法为你服务,这叫拒绝服务攻击,简称DOS。</p>
+<h3 id="DDOS"><a href="#DDOS" class="headerlink" title="DDOS"></a>DDOS</h3><p>假设你是个妹子,你因男朋友被一位女性敌视,但是你男朋友的处理能力十分强大,处理速度已经高于她的请求速度,于是她雇佣了一票女性来轮流麻烦你的男朋友,这叫分布式拒绝服务攻击,简称DDOS。</p>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><p>假设你是个妹子，你发现男朋友总是在处理一些无关紧要的其它请求，于是乎你给男朋友了一个白名单,要求他只处理白名单内的请求，而拒绝其它身份不明的人的要求,这叫访问控制。</p>
+<h3 id="入侵检测系统"><a href="#入侵检测系统" class="headerlink" title="入侵检测系统"></a>入侵检测系统</h3><p>假设你是个妹子，你男朋友风流倜傥，你总担心他出轨，于是你在他身上安装了一个窃听器，里面内置了一些可疑女生勾搭行为的特征库，只要出现疑似被勾搭的情况，就会立刻向你报警，这叫入侵检测系统（IDS）。</p>
+<h3 id="入侵防御系统"><a href="#入侵防御系统" class="headerlink" title="入侵防御系统"></a>入侵防御系统</h3><p>假设你是个妹子，你改良了上面的窃听器，当可疑女性对你男朋友做出勾搭行为的时候，立刻释放1万伏电压，把可疑人击昏，终止这次勾搭。这叫入侵防御系统（IPS）。</p>
+<h3 id="SOC"><a href="#SOC" class="headerlink" title="SOC"></a>SOC</h3><p>假设你是个妹子，虽然你装了各种窃听器、报警器，可是你蓝朋友处处留情，报警器响个不停，让你应接不暇，疲于奔命，于是你搞了个装置集中收集这些出轨告警，进行综合分析，生成你男朋友的出轨报告。这叫SIEM或者SOC。</p>
+<h3 id="等级保护"><a href="#等级保护" class="headerlink" title="等级保护"></a>等级保护</h3><p>假设你是个妹子，你把男朋友的出轨报告提交给他父母，得到了他们的大力支持，男友父母开始对他严加管教、限期整改，为你们的爱情保驾护航，做到合情合理、合法合规，这叫等级保护。</p>
+<h3 id="SDWAN"><a href="#SDWAN" class="headerlink" title="SDWAN"></a>SDWAN</h3><p>假设你是个妹子，你离男朋友家有点远，你开车去，这叫自建专线，你打车过去，这叫租用专线，你骑摩拜单车过去，这叫SDWAN。</p>
+<h3 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h3><p>假设你是个妹子，你和男朋友的恋爱遭到了双方家长的反对，不准双方往来，你们偷偷挖了一条隧道，便于进行幽会，这叫VPN。</p>
+<h3 id="逆向工程"><a href="#逆向工程" class="headerlink" title="逆向工程"></a>逆向工程</h3><p>假设你是个妹子，你的男朋友太优秀而造人窥视，于是乎它们研究了一下你的男朋友，稍微修改了一点点生产出一个男朋友B，与你的男朋友百分制99相似，这不叫剽窃，这叫逆向工程,比如男朋友外挂。</p>
+<h3 id="压力测试"><a href="#压力测试" class="headerlink" title="压力测试"></a>压力测试</h3><p>假设你是个妹子，你要求你的男朋友坚持十分钟，然后十五分钟继而二十分钟，以测试你男朋友的极限在哪里，这叫压力测试。</p>
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><p>假设你是个妹子，为了保证你男朋友的正常运行，于是乎你每天查看他的微信微博等社交资料来寻找可能产生问题的线索，这叫数据分析。</p>
+<h3 id="并行计算"><a href="#并行计算" class="headerlink" title="并行计算"></a>并行计算</h3><p>假设你是个妹子，你的男朋友属于社交活跃选手，每天的微博知乎微信生产了大量信息，你发现自己的分析速度远远低于他生的速度，于是乎你找来你的闺蜜一起分析，这叫并行计算。</p>
+<h3 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h3><p>假设你是个妹子，你的男朋友太能折腾处处留情产生了天量的待处理信息，你和你的闺蜜们已经累趴也没赶上他创造的速度，于是你付费在知乎上找了20个小伙伴帮你一起分析，这叫云计算。</p>
+<h3 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h3><p>假设你是个妹子，你在得到男朋友经常出没的地点后，根据酒店，敏感时间段等信息确定男朋友因该是出轨了，这叫数据挖掘。</p>
+<h3 id="精准推送"><a href="#精准推送" class="headerlink" title="精准推送"></a>精准推送</h3><p>假设你是个妹子，在分析男友的数据后，得知他下午又要出去开房，于是乎你在他准备出门前给他发了个短信，问他有没有带tt，没有的话可以在我这里买，这叫精准推送，需要配合数据挖掘。</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>假如你是个妹子，你的男朋友总该出去浪而各种出问题，于是乎你租了间屋子并准备好了所有需要的东西并告诉他，以后不用找酒店了，直接来我这屋子吧，什么都准备好了，这叫容器。</p>
+<h3 id="大数据脱敏和大数据变现"><a href="#大数据脱敏和大数据变现" class="headerlink" title="大数据脱敏和大数据变现"></a>大数据脱敏和大数据变现</h3><p>假如你是个妹子，你决定从不同的男友身上采集数据，你就是大数据中心。有一天你决定生一个宝宝，这叫大数据应用。宝宝生下来不知道是谁的，这叫大数据脱敏。但是从宝宝外观来看，黑色皮肤金色头发，这叫数据融合跨域建模。你决定把这个宝宝拿来展览收点门票，这叫大数据变现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/term/" rel="tag"># term</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/27/docker/docker%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fredmine/" rel="prev" title="docker搭建项目管理系统redmine">
+      <i class="fa fa-chevron-left"></i> docker搭建项目管理系统redmine
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/29/os/%E5%85%B3%E9%97%ADMac%E7%B3%BB%E7%BB%9F%E7%9A%84SIP/" rel="next" title="关闭Mac系统的SIP">
+      关闭Mac系统的SIP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%B7%E5%A4%87%E4%BB%BD"><span class="nav-number">1.</span> <span class="nav-text">冷备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E4%BB%BD"><span class="nav-number">2.</span> <span class="nav-text">双机热备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%9C%B0%E5%AE%B9%E7%81%BE%E5%A4%87%E4%BB%BD"><span class="nav-number">3.</span> <span class="nav-text">异地容灾备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E5%A4%87%E4%BB%BD"><span class="nav-number">4.</span> <span class="nav-text">云备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%BE%E9%9A%BE%E6%BC%94%E7%BB%83"><span class="nav-number">5.</span> <span class="nav-text">灾难演练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-number">6.</span> <span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TraceRoute"><span class="nav-number">7.</span> <span class="nav-text">TraceRoute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%83%E8%B7%B3%E7%9B%91%E6%B5%8B"><span class="nav-number">8.</span> <span class="nav-text">心跳监测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2"><span class="nav-number">9.</span> <span class="nav-text">故障切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">10.</span> <span class="nav-text">主从配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">11.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4LVS"><span class="nav-number">12.</span> <span class="nav-text">集群LVS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%9B%86%E7%BE%A4%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">13.</span> <span class="nav-text">多集群横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%B5%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">14.</span> <span class="nav-text">纵向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN"><span class="nav-number">15.</span> <span class="nav-text">CDN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB"><span class="nav-number">16.</span> <span class="nav-text">拒绝服务攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDOS"><span class="nav-number">17.</span> <span class="nav-text">DDOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">18.</span> <span class="nav-text">访问控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F"><span class="nav-number">19.</span> <span class="nav-text">入侵检测系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E4%BE%B5%E9%98%B2%E5%BE%A1%E7%B3%BB%E7%BB%9F"><span class="nav-number">20.</span> <span class="nav-text">入侵防御系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOC"><span class="nav-number">21.</span> <span class="nav-text">SOC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%89%E7%BA%A7%E4%BF%9D%E6%8A%A4"><span class="nav-number">22.</span> <span class="nav-text">等级保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDWAN"><span class="nav-number">23.</span> <span class="nav-text">SDWAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPN"><span class="nav-number">24.</span> <span class="nav-text">VPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B"><span class="nav-number">25.</span> <span class="nav-text">逆向工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">26.</span> <span class="nav-text">压力测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="nav-number">27.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="nav-number">28.</span> <span class="nav-text">并行计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%91%E8%AE%A1%E7%AE%97"><span class="nav-number">29.</span> <span class="nav-text">云计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98"><span class="nav-number">30.</span> <span class="nav-text">数据挖掘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B2%BE%E5%87%86%E6%8E%A8%E9%80%81"><span class="nav-number">31.</span> <span class="nav-text">精准推送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">32.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%84%B1%E6%95%8F%E5%92%8C%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%8F%98%E7%8E%B0"><span class="nav-number">33.</span> <span class="nav-text">大数据脱敏和大数据变现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
