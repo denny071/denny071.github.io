@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="Quick Look是Mac的一个极为方便的功能，用户可以在不打开外部软件的情况下按下空格键快速预览文件。  对于常见文件，例如jpg、png、gif等图片格式，doc、txt、ppt等文档格式，sketch、ps、ai等设计师常用的源文件格式，都可以直接按键盘的空格键实现即时预览，再按空格键关闭，而不用像Win系统一样用鼠标双击打开再点击关闭按钮这种复杂操作。在平时繁忙的工作中，这个功能无疑极大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员应该必备的8个QuickLook插件">
+<meta property="og:url" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="Quick Look是Mac的一个极为方便的功能，用户可以在不打开外部软件的情况下按下空格键快速预览文件。  对于常见文件，例如jpg、png、gif等图片格式，doc、txt、ppt等文档格式，sketch、ps、ai等设计师常用的源文件格式，都可以直接按键盘的空格键实现即时预览，再按空格键关闭，而不用像Win系统一样用鼠标双击打开再点击关闭按钮这种复杂操作。在平时繁忙的工作中，这个功能无疑极大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-cda31c11abb095a3e615d8e849c0b754_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-c1ae40ee4f2a80ab23415fe62eff2b94_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-e73dd73dd5de67a9a10396605a04ae7f_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-e58ab7aaea6f3d82204df79b1a72b333_b.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-6ad6a9a643fef5078c9675dee5b1f0d3_b.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-a22300958e7a16d69669a777729ce583_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-a4f09e056b0331d53ed80278d0203446_b.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-0b54f1d6592ad857c60dfa7c330b6872_b.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-feacfa06e3a9c50d9f84c2c32f0a3ac9_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-31295ffd0a93128d38a6614d462dcfc6_r.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-31295ffd0a93128d38a6614d462dcfc6_r-5662574.jpg">
+<meta property="og:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-c5c97a1f7ecb75b18a6e89b2c084a282_r.jpg">
+<meta property="article:published_time" content="2020-11-02T01:08:13.000Z">
+<meta property="article:modified_time" content="2020-11-18T01:25:22.740Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="plugin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-cda31c11abb095a3e615d8e849c0b754_r.jpg">
+
+<link rel="canonical" href="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>程序员应该必备的8个QuickLook插件 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          程序员应该必备的8个QuickLook插件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-02 09:08:13" itemprop="dateCreated datePublished" datetime="2020-11-02T09:08:13+08:00">2020-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-18 09:25:22" itemprop="dateModified" datetime="2020-11-18T09:25:22+08:00">2020-11-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/os/" itemprop="url" rel="index"><span itemprop="name">os</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Quick Look是Mac的一个极为方便的功能，用户可以在不打开外部软件的情况下按下空格键快速预览文件。</p>
+<blockquote>
+<p>对于常见文件，例如jpg、png、gif等图片格式，doc、txt、ppt等文档格式，sketch、ps、ai等设计师常用的源文件格式，都可以直接按键盘的空格键实现即时预览，再按空格键关闭，而不用像Win系统一样用鼠标双击打开再点击关闭按钮这种复杂操作。在平时繁忙的工作中，这个功能无疑极大地提升了我们的工作效率。</p>
+</blockquote>
+<h2 id="Quick-Look插件安装"><a href="#Quick-Look插件安装" class="headerlink" title="Quick Look插件安装"></a>Quick Look插件安装</h2><h3 id="首先下载插件"><a href="#首先下载插件" class="headerlink" title="首先下载插件"></a>首先下载插件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">链接: https://pan.baidu.com/s/18fflbWmjgTotOyX7o7Slrg</span><br><span class="line">提取码: y8xm</span><br><span class="line">这里提供了本文讲的8个插件，大家可以按照本文教程先下载WebP.qlgenerator。</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="移动插件到QuickLook目录"><a href="#移动插件到QuickLook目录" class="headerlink" title="移动插件到QuickLook目录"></a>移动插件到QuickLook目录</h3><p>复制路径/Library/QuickLook，打开Finder，依次选择：前往-前往文件夹-粘贴路径后回车，然后把下载的插件复制到这个目录，这时候会提示输入你的电脑密码。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-cda31c11abb095a3e615d8e849c0b754_r.jpg" alt="v2-cda31c11abb095a3e615d8e849c0b754_r"></p>
+<h3 id="用终端重启QuickLook"><a href="#用终端重启QuickLook" class="headerlink" title="用终端重启QuickLook"></a>用终端重启QuickLook</h3><p>打开终端（Terminal），输入qlmanage -r并回车，之后出现resetting quicklookd提示就可以。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-c1ae40ee4f2a80ab23415fe62eff2b94_r.jpg" alt="v2-c1ae40ee4f2a80ab23415fe62eff2b94_r"></p>
+<p>我们再看看刚才无法预览的webp图片，已经可以预览了。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-e73dd73dd5de67a9a10396605a04ae7f_r.jpg" alt="v2-e73dd73dd5de67a9a10396605a04ae7f_r"></p>
+<h2 id="常用插件介绍"><a href="#常用插件介绍" class="headerlink" title="常用插件介绍"></a>常用插件介绍</h2><p>到这里我们已经学会安装插件了，如果要删除也很简单，在目录中删掉对应的插件即可，只不过要再次输入密码。Mac一般视修改系统文件的操作为敏感操作，因此要进行安全确认。</p>
+<p>除了刚才介绍的WebP插件之外，下面还有一些非常好用的插件会极大提升你的工作效率。</p>
+<h3 id="BetterZipQL"><a href="#BetterZipQL" class="headerlink" title="BetterZipQL"></a>BetterZipQL</h3><p>这个插件建议所有人安装，真的非常好用。</p>
+<p>一般我们下载的压缩文件有rar、zip、7z等格式，要想知道里面包含的内容需要解压查看。如何在不解压的情况下查看里面的内容呢？BetterZipQL插件就能办到，直接按空格键就可以看里面的内容。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-e58ab7aaea6f3d82204df79b1a72b333_b.jpg" alt="v2-e58ab7aaea6f3d82204df79b1a72b333_b"></p>
+<h3 id="QLImageSize"><a href="#QLImageSize" class="headerlink" title="QLImageSize"></a>QLImageSize</h3><p>又是一个所有人都必备插件。</p>
+<p>默认情况下，Mac电脑对于图片格式的支持是很多的，我们直接按空格键就可以预览，很方便。但是对于很多人来说还需要看图片的尺寸和体积，Mac默认预览是不显示的。</p>
+<p>当然了，我们可以在Finder中，顶部栏选择显示-显示预览，就可以在Finder窗口中调出右侧预览信息直接查看，但是会占用显示范围。也可以在Finder空白处右键-查看显示选项-勾选显示项目简介，这样可以直接在图表上显示尺寸，但图片体积大小无法显示。</p>
+<p>但是我接触的很多同事，甚至是身经百战的程序员，还是先鼠标右键图片，选择显示简介，打开弹窗去查看，然后再点击关闭。本来1秒钟的操作，却要花上好几秒的时间。</p>
+<p>QLImageSize就可以解决这个问题。安装后，直接空格键预览图片，顶部的名称前面会加上图片的尺寸和体积大小，非常方便。在快节奏的工作流程中，基本上1秒钟就能get到关键信息。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-6ad6a9a643fef5078c9675dee5b1f0d3_b.jpg" alt="v2-6ad6a9a643fef5078c9675dee5b1f0d3_b"></p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-a22300958e7a16d69669a777729ce583_r.jpg" alt="v2-a22300958e7a16d69669a777729ce583_r"></p>
+<h3 id="PatternQuickLook"><a href="#PatternQuickLook" class="headerlink" title="PatternQuickLook"></a>PatternQuickLook</h3><p>说到.pat格式，很多人都不太清楚是个啥。但是如果你经常下载Photoshop的图案填充就知道了。.pat是Photoshop的图案填充文件，用Photoshop打开后就可以自动添加到图案叠加列表中。</p>
+<p>但是在下载.pat文件后，我们是看不到它到底包含什么图案的，只能载入到PS查看。这个时候就用上PatternQuickLook这个插件了，安装后只需要按下空格键，就可以快速查看Photoshop 的.pat图案填充文件。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-a4f09e056b0331d53ed80278d0203446_b.jpg" alt="v2-a4f09e056b0331d53ed80278d0203446_b"></p>
+<h3 id="QLMarkdown"><a href="#QLMarkdown" class="headerlink" title="QLMarkdown"></a>QLMarkdown</h3><p>这个插件可能对大部分不写文章的设计师来说有点小众，但是对于经常写文章的设计、运营、产品、技术同学来说非常实用。</p>
+<p>QLMarkdown是专门来预览.md后缀名Markdown文件的。Mac默认无法预览，安装后即可按空格键预览。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-0b54f1d6592ad857c60dfa7c330b6872_b.jpg" alt="v2-0b54f1d6592ad857c60dfa7c330b6872_b"></p>
+<p>那么问题来了，什么是Markdown呢？</p>
+<p>Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。很多与编辑相关的工作都使用Markdown语法来进行写作，极大地提高了编辑和发布效率。</p>
+<h3 id="QLColorCode"><a href="#QLColorCode" class="headerlink" title="QLColorCode"></a>QLColorCode</h3><p>这个插件对于程序员和会代码的设计师来说非常方便，可以快速查看高亮的代码，比如js文件、php文件。</p>
+<p>默认情况下空格键预览js文件后，显示的全是黑色的代码文本，这个可不符合程序员平时的阅读习惯。一般程序员用的编辑器中都会内置代码主题，把各种类别通过颜色区分开。使用QLColorCode就可以把黑白色的预览改为符合程序员口味的彩色预览，提升代码可读性。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-feacfa06e3a9c50d9f84c2c32f0a3ac9_r.jpg" alt="v2-feacfa06e3a9c50d9f84c2c32f0a3ac9_r"></p>
+<h3 id="QuickLookJSON"><a href="#QuickLookJSON" class="headerlink" title="QuickLookJSON"></a>QuickLookJSON</h3><p>这个插件可以快速查看JSON代码文件，并使之彩色化，和QLColorCode插件一样的道理，只是额外增加对JSON代码的支持。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-31295ffd0a93128d38a6614d462dcfc6_r.jpg" alt="v2-31295ffd0a93128d38a6614d462dcfc6_r"></p>
+<h3 id="QLStephen"><a href="#QLStephen" class="headerlink" title="QLStephen"></a>QLStephen</h3><p>在Mac中，有一些文本文件</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-31295ffd0a93128d38a6614d462dcfc6_r-5662574.jpg" alt="v2-31295ffd0a93128d38a6614d462dcfc6_r-5662574"></p>
+<p>没有或者忘了后缀名，这样的话是无法预览和打开的。但是安装QLStephen插件后，就可以预览无拓展名的纯文本文件。</p>
+<p><img src="/2020/11/02/os/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%BF%85%E5%A4%87%E7%9A%848%E4%B8%AAQuickLook%E6%8F%92%E4%BB%B6/v2-c5c97a1f7ecb75b18a6e89b2c084a282_r.jpg" alt="v2-c5c97a1f7ecb75b18a6e89b2c084a282_r"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/plugin/" rel="tag"># plugin</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/03/php/PHP%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B/" rel="next" title="PHP运行流程">
+      PHP运行流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Look%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Quick Look插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E4%B8%8B%E8%BD%BD%E6%8F%92%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">首先下载插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%8F%92%E4%BB%B6%E5%88%B0QuickLook%E7%9B%AE%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">移动插件到QuickLook目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E7%BB%88%E7%AB%AF%E9%87%8D%E5%90%AFQuickLook"><span class="nav-number">1.3.</span> <span class="nav-text">用终端重启QuickLook</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">常用插件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BetterZipQL"><span class="nav-number">2.1.</span> <span class="nav-text">BetterZipQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QLImageSize"><span class="nav-number">2.2.</span> <span class="nav-text">QLImageSize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PatternQuickLook"><span class="nav-number">2.3.</span> <span class="nav-text">PatternQuickLook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QLMarkdown"><span class="nav-number">2.4.</span> <span class="nav-text">QLMarkdown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QLColorCode"><span class="nav-number">2.5.</span> <span class="nav-text">QLColorCode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QuickLookJSON"><span class="nav-number">2.6.</span> <span class="nav-text">QuickLookJSON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QLStephen"><span class="nav-number">2.7.</span> <span class="nav-text">QLStephen</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
