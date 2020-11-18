@@ -1,7 +1,7 @@
 ---
 title: 在Ubuntu中安装chrome和chromedriver
 date: 2020-11-7 14:39:26
-tags: Ubuntu
+tags: ubuntu
 categories: os
 ---
 **下载chrome**
