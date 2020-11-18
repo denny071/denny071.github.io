@@ -106,3 +106,10 @@ deploy:
   type: git
   repository: https://github.com/denny071/denny071.github.io.git
   branch: master
+
+# Search 
+search:
+  path: ./public/search.xml
+  field: post
+  format: html
+  limit: 10000

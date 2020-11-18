@@ -1,6 +1,6 @@
 ---
 title: 安装_windows10_store
-date: 2020-08-27 14:42:47
+date: 2020-11-14 14:42:47
 tags: win10
 categories: os
 ---
@@ -17,7 +17,7 @@ ls
 #### 3.查看 Microsoft.WindowsStore 开头的目录 
 
 ```
-Microsoft.WindowsStore_11706.1002.9.0_x64__8wekyb3d8bbwe
+例如 Microsoft.WindowsStore_11706.1002.9.0_x64__8wekyb3d8bbwe
 ```
 
 #### 4.然后执行如下命令

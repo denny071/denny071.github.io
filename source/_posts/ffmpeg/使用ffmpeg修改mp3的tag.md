@@ -1,7 +1,7 @@
 ---
 title: 使用ffmpeg修改mp3的tag
 categories: ffmpeg
-date: 2020-11-17 17:22:19
+date: 2020-11-5 17:22:19
 tags: mp3
 ---
 

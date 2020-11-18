@@ -1,7 +1,7 @@
 ---
 title: centos7+nginx+rtmp+ffmpeg搭建流媒体服务器
 tags: rtmp
-date: 2019-01-02 15:48:26
+date: 2020-11-10 15:48:26
 categories: ffmpeg
 description: 搭建流媒体服务器
 ---
