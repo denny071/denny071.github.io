@@ -1063,4 +1063,97 @@
         <tag>plugin</tag>
       </tags>
   </entry>
+  <entry>
+    <title>如何在国内快速安装brew</title>
+    <url>/2021/12/07/os/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%9B%BD%E5%86%85%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85brew/</url>
+    <content><![CDATA[<h1 id="安装brew"><a href="#安装brew" class="headerlink" title="安装brew"></a>安装brew</h1><h2 id="Homebrew-是什么"><a href="#Homebrew-是什么" class="headerlink" title="Homebrew 是什么"></a>Homebrew 是什么</h2><p>Homebrew是 mac的包管理器，仅需执行相应的命令,就能下载安装需要的软件包，可以省掉自己去下载、解压、拖拽(安装)等繁琐的步骤。 比如安装服务器 nginx，打开终端执行以下命令即可安装:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure>
+<h2 id="Homebrew-怎么安装"><a href="#Homebrew-怎么安装" class="headerlink" title="Homebrew 怎么安装"></a>Homebrew 怎么安装</h2><h3 id="方法一：brew官网的安装脚本"><a href="#方法一：brew官网的安装脚本" class="headerlink" title="方法一：brew官网的安装脚本"></a>方法一：brew官网的安装脚本</h3><p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这时很可能会出现一个问题: 要么下载极其龟速，要么直接出现如下提示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl: (7) Failed to connect to raw.githubusercontent.com port 443: Connection refused</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>原因：这是 <a href="http://raw.githubusercontent.com/">http://raw.githubusercontent.com</a> 访问不稳定引起的。</p>
+</blockquote>
+<h3 id="方法二：brew-镜像安装脚本"><a href="#方法二：brew-镜像安装脚本" class="headerlink" title="方法二：brew 镜像安装脚本"></a>方法二：brew 镜像安装脚本</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>该脚本用了中科大镜像加速访问，仅修改仓库地址部分，不会产生安全隐患。 关于中科大所提供的 Homebrew 镜像服务 <a href="https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git">https://lug.ustc.edu.cn/wiki/mirrors/help/brew.git</a></p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><h3 id="若出现-Error-Checksum-mismatch"><a href="#若出现-Error-Checksum-mismatch" class="headerlink" title="若出现 Error: Checksum mismatch."></a>若出现 Error: Checksum mismatch.</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl: (56) LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54</span><br><span class="line">Error: Checksum mismatch.</span><br><span class="line">Expected: b065e5e3783954f3e65d8d3a6377ca51649bfcfa21b356b0dd70490f74c6bd86</span><br><span class="line">Actual: e8a348fe5d5c2b966bab84052062f0317944122dea5fdfdc84ac6d0bd513c137</span><br><span class="line">Archive: /Users/joyce/Library/Caches/Homebrew/portable-ruby-2.6.3_2.yosemite.bottle.tar.gz</span><br><span class="line">To retry an incomplete download, remove the file above.</span><br><span class="line">Error: Failed to install Homebrew Portable Ruby (and your system version is too old)!</span><br><span class="line">Failed during: /usr/<span class="built_in">local</span>/bin/brew update --force</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里是由Homebrew目录下的portable-ruby-2.6.3_2.yosemite.bottle.tar.gz文件引起的安装中断，只需要到上面对应的路径里，删掉这个文件，重新执行安装命令即可：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="若卡在了Cloning-into…"><a href="#若卡在了Cloning-into…" class="headerlink" title="若卡在了Cloning into…"></a>若卡在了Cloning into…</h3><p><img src="evernotecid://7562F6CF-D053-4CF7-97F8-E79493437997/appyinxiangcom/7101777/ENResource/p345" alt="c5e6765c76e6d641ecc06901e7991a51.png"></p>
+<blockquote>
+<p>由这里的龟速可断定卡住了，立马用Control + C中断脚本，然后执行以下命令：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/&quot;</span></span><br><span class="line">mkdir homebrew &amp;&amp; <span class="built_in">cd</span> homebrew</span><br><span class="line">git <span class="built_in">clone</span> git://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>执行后可看到：<br><img src="evernotecid://7562F6CF-D053-4CF7-97F8-E79493437997/appyinxiangcom/7101777/ENResource/p346" alt="3336e8641922b9a4e3de58501726becd.png"><br>速度立马快得飞起，一下子就能装好。<br>注：最后出现 Installation successful! 或者 Checking out files: 100% (5392/5392), done. 说明安装成功。</p>
+</blockquote>
+<h2 id="Homebrew安装完为何需要配置"><a href="#Homebrew安装完为何需要配置" class="headerlink" title="Homebrew安装完为何需要配置"></a>Homebrew安装完为何需要配置</h2><p>前面已经提到，Homebrew通常用来下载软件的，但它在安装软件时非常慢。为了提升安装速度，需要更改 Homebrew 的安装源，将其替换成国内镜像。</p>
+<p>这里用的是由中科大负责托管维护的 Homebrew 镜像。其中，前两个为必须配置的项目，后两个可按需配置。</p>
+<h3 id="1-必备设置"><a href="#1-必备设置" class="headerlink" title="1.必备设置"></a>1.必备设置</h3><blockquote>
+<p>替换 brew.git：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span> remote <span class="built_in">set</span>-url origin https://mirrors.ustc.edu.cn/brew.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>替换 homebrew-core.git：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo homebrew/core)</span>&quot;</span> remote <span class="built_in">set</span>-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-按需设置"><a href="#2-按需设置" class="headerlink" title="2.按需设置"></a>2.按需设置</h3><blockquote>
+<p>替换 homebrew-cask.git：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git -C <span class="string">&quot;<span class="subst">$(brew --repo homebrew/cask)</span>&quot;</span> remote <span class="built_in">set</span>-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>替换homebrew-bottles：<br>首先要先区分你的mac用哪种终端工具，如果是 bash，则执行：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#x27;</span> &gt;&gt; ~/.bash_profile</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>若是 zsh，则执行：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：Homebrew 主要由四个部分组成: brew、homebrew-core 、homebrew-cask、homebrew-bottles，它们对应的功能如下：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Homebrew</td>
+<td>源代码仓库</td>
+</tr>
+<tr>
+<td>homebrew-core</td>
+<td>Homebrew 核心源</td>
+</tr>
+<tr>
+<td>homebrew-cask</td>
+<td>提供macos应用和大型二进制文件的安装</td>
+</tr>
+<tr>
+<td>homebrew-bottles</td>
+<td>预编译二进制软件包</td>
+</tr>
+</tbody></table>
+<h2 id="Homebrew-基本用法有哪些"><a href="#Homebrew-基本用法有哪些" class="headerlink" title="Homebrew 基本用法有哪些"></a>Homebrew 基本用法有哪些</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询：</span></span><br><span class="line">brew search 软件名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装：</span></span><br><span class="line">brew install 软件名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载：</span></span><br><span class="line">brew uninstall 软件名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 Homebrew：</span></span><br><span class="line">brew update </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Homebrew 配置信息：</span></span><br><span class="line">brew config </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：使用官方脚本同样会遇到uninstall地址无法访问问题，可以替换为下面脚本：</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e <span class="string">&quot;<span class="subst">$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/uninstall)</span>&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>os</category>
+      </categories>
+      <tags>
+        <tag>brew</tag>
+      </tags>
+  </entry>
 </search>
