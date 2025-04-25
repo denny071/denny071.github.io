@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Denny的博客，技术分享">
+  <meta name="description" content="1. 基础声明方式12345678from fastapi import Cookie, FastAPIfrom typing import Annotatedapp &#x3D; FastAPI()@app.get(&quot;&#x2F;items&#x2F;&quot;)async def read_items(ads_id: Annotated[str | None, Cookie()] &#x3D; None):    ret">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Denny的博客">
+<meta property="og:title" content="FastAPI自学教程（14）- Cookie参数处理">
 <meta property="og:url" content="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8814%EF%BC%89/index.html">
 <meta property="og:site_name" content="Denny的博客">
-<meta property="og:description" content="Denny的博客，技术分享">
+<meta property="og:description" content="1. 基础声明方式12345678from fastapi import Cookie, FastAPIfrom typing import Annotatedapp &#x3D; FastAPI()@app.get(&quot;&#x2F;items&#x2F;&quot;)async def read_items(ads_id: Annotated[str | None, Cookie()] &#x3D; None):    ret">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-04-25T01:26:39.312Z">
-<meta property="article:modified_time" content="2025-04-25T01:26:45.827Z">
+<meta property="article:published_time" content="2025-04-25T01:40:31.000Z">
+<meta property="article:modified_time" content="2025-04-25T01:45:43.182Z">
 <meta property="article:author" content="Denny">
-<meta property="article:tag" content="php,mysql,nginx">
+<meta property="article:tag" content="FastAPI">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8814%EF%BC%89/">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title> | Denny的博客</title>
+  <title>FastAPI自学教程（14）- Cookie参数处理 | Denny的博客</title>
   
 
 
@@ -170,7 +170,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          FastAPI自学教程（14）- Cookie参数处理
         </h1>
 
         <div class="post-meta">
@@ -181,7 +181,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-04-25 09:26:39 / 修改时间：09:26:45" itemprop="dateCreated datePublished" datetime="2025-04-25T09:26:39+08:00">2025-04-25</time>
+              <time title="创建时间：2025-04-25 09:40:31 / 修改时间：09:45:43" itemprop="dateCreated datePublished" datetime="2025-04-25T09:40:31+08:00">2025-04-25</time>
             </span>
 
           
@@ -195,7 +195,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id="1-基础声明方式"><a href="#1-基础声明方式" class="headerlink" title="1. 基础声明方式"></a>1. 基础声明方式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> Cookie, FastAPI</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Annotated</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">ads_id: Annotated[<span class="built_in">str</span> | <span class="literal">None</span>, Cookie(<span class="params"></span>)] = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;ads_id&quot;</span>: ads_id&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>必须使用 <code>Cookie()</code> 声明参数，否则会被识别为查询参数   </li>
+<li>参数名需与客户端cookie的key完全一致才能正确接收   </li>
+<li>支持类型注解与默认值设置，未传值时默认为None </li>
+</ul>
+<h2 id="2-模型化处理"><a href="#2-模型化处理" class="headerlink" title="2. 模型化处理"></a>2. 模型化处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> Cookie, Annotated</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CookieModel</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    session_id: <span class="built_in">str</span></span><br><span class="line">    tracker: <span class="built_in">str</span> | <span class="literal">None</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/model/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">model_cookie</span>(<span class="params">cookie: Annotated[CookieModel, Cookie(<span class="params"></span>)]</span>):</span><br><span class="line">    <span class="keyword">return</span> cookie</span><br></pre></td></tr></table></figure>
+<ul>
+<li>支持使用Pydantic模型批量管理多个Cookie参数   </li>
+<li>自动提取请求头中的对应字段进行验证和转换   </li>
+<li>模型可复用，适用于需要统一校验规则的场景   </li>
+</ul>
+<h2 id="3-禁止额外Cookie"><a href="#3-禁止额外Cookie" class="headerlink" title="3. 禁止额外Cookie"></a>3. 禁止额外Cookie</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StrictCookie</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    model_config = &#123;<span class="string">&quot;extra&quot;</span>: <span class="string">&quot;forbid&quot;</span>&#125;</span><br><span class="line">    </span><br><span class="line">    user_token: <span class="built_in">str</span></span><br><span class="line">    theme: <span class="built_in">str</span> = <span class="string">&quot;light&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/strict/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">strict_cookie</span>(<span class="params">cookie: Annotated[StrictCookie, Cookie(<span class="params"></span>)]</span>):</span><br><span class="line">    <span class="keyword">return</span> cookie</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过模型配置禁止客户端发送未声明的Cookie   </li>
+<li>违规时会返回422错误（如客户端发送未定义的<code>lang</code>参数）   </li>
+<li>适用于需要严格管控Cookie参数的安全场景   </li>
+</ul>
+<h2 id="4-文档交互说明"><a href="#4-文档交互说明" class="headerlink" title="4. 文档交互说明"></a>4. 文档交互说明</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Swagger UI会显示Cookie参数文档</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/docs-demo/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">docs_demo</span>(<span class="params"></span></span><br><span class="line"><span class="params">    debug_mode: Annotated[<span class="built_in">bool</span>, Cookie(<span class="params"></span>)] = <span class="literal">False</span></span></span><br><span class="line"><span class="params"></span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;debug&quot;</span>: debug_mode&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>文档界面会展示Cookie参数的字段说明   </li>
+<li>浏览器测试时需手动设置Cookie（开发者工具→Application→Cookies）   </li>
+<li>JavaScript无法直接操作受HTTP Only保护的Cookie   </li>
+</ul>
+<h2 id="5-高级配置技巧"><a href="#5-高级配置技巧" class="headerlink" title="5. 高级配置技巧"></a>5. 高级配置技巧</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/set-cookie/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">set_cookie</span>():</span><br><span class="line">    content = &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Cookie set&quot;</span>&#125;</span><br><span class="line">    response = JSONResponse(content=content)</span><br><span class="line">    response.set_cookie(</span><br><span class="line">        key=<span class="string">&quot;user_session&quot;</span>,</span><br><span class="line">        value=<span class="string">&quot;abc123&quot;</span>,</span><br><span class="line">        max_age=<span class="number">3600</span>,</span><br><span class="line">        httponly=<span class="literal">True</span>,</span><br><span class="line">        samesite=<span class="string">&quot;strict&quot;</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过Response对象设置安全Cookie（需导入<code>JSONResponse</code>）   </li>
+<li>支持<code>max_age</code>、<code>domain</code>、<code>secure</code>等高级参数配置   </li>
+<li>建议敏感Cookie启用<code>httponly</code>和<code>samesite</code>防护   </li>
+</ul>
+
     </div>
 
     
@@ -203,6 +233,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+          </div>
 
         
 
@@ -210,12 +243,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8813%EF%BC%89/" rel="prev" title="">
-      <i class="fa fa-chevron-left"></i> 
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8813%EF%BC%89/" rel="prev" title="FastAPI自学教程（13）- 额外数据类型">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（13）- 额外数据类型
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8815%EF%BC%89/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8815%EF%BC%89/" rel="next" title="FastAPI自学教程（15）- Header参数处理">
+      FastAPI自学教程（15）- Header参数处理 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -275,6 +308,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E5%A3%B0%E6%98%8E%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">1. 基础声明方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E5%8C%96%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2. 模型化处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%A6%81%E6%AD%A2%E9%A2%9D%E5%A4%96Cookie"><span class="nav-number">3.</span> <span class="nav-text">3. 禁止额外Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%96%87%E6%A1%A3%E4%BA%A4%E4%BA%92%E8%AF%B4%E6%98%8E"><span class="nav-number">4.</span> <span class="nav-text">4. 文档交互说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7"><span class="nav-number">5.</span> <span class="nav-text">5. 高级配置技巧</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
