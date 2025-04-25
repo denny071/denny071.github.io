@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.基础响应类型1234567891011121314from fastapi import FastAPIfrom fastapi.responses import JSONResponse, HTMLResponseapp &#x3D; FastAPI()@app.get(&quot;&#x2F;custom&quot;, response_class&#x3D;JSONResponse)async def custom_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI自学教程（52） - 自定义响应机制">
+<meta property="og:url" content="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8852%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1.基础响应类型1234567891011121314from fastapi import FastAPIfrom fastapi.responses import JSONResponse, HTMLResponseapp &#x3D; FastAPI()@app.get(&quot;&#x2F;custom&quot;, response_class&#x3D;JSONResponse)async def custom_">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-25T14:11:36.000Z">
+<meta property="article:modified_time" content="2025-04-25T14:13:49.258Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8852%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>FastAPI自学教程（52） - 自定义响应机制 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8852%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastAPI自学教程（52） - 自定义响应机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-25 22:11:36 / 修改时间：22:13:49" itemprop="dateCreated datePublished" datetime="2025-04-25T22:11:36+08:00">2025-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础响应类型"><a href="#1-基础响应类型" class="headerlink" title="1.基础响应类型"></a>1.基础响应类型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse, HTMLResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/custom&quot;</span>, response_class=JSONResponse</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">custom_response</span>():</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(content=&#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;自定义JSON&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/html&quot;</span>, response_class=HTMLResponse</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">html_page</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello HTML&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过<code>response_class</code>参数指定响应类型（默认<code>JSONResponse</code>）  </li>
+<li>支持类型包括：<ul>
+<li><code>JSONResponse</code>：默认JSON格式，支持<code>ORJSONResponse</code>提升性能（需安装orjson库）</li>
+<li><code>HTMLResponse</code>：返回HTML内容</li>
+<li><code>PlainTextResponse</code>：纯文本格式</li>
+<li><code>FileResponse</code>：文件下载</li>
+</ul>
+</li>
+<li>请求处理流程：  <pre class="mermaid">graph TD
+  A[客户端请求] --> B{响应类型判断}
+  B -->|JSON| C[自动序列化数据]
+  B -->|HTML| D[渲染HTML内容]
+  B -->|文件| E[流式传输]</pre>
+
+</li>
+</ul>
+<h2 id="2-流式响应与文件处理"><a href="#2-流式响应与文件处理" class="headerlink" title="2.流式响应与文件处理"></a>2.流式响应与文件处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse, FileResponse</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_large_file</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">f&quot;数据块 <span class="subst">&#123;i&#125;</span>\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">stream_data</span>():</span><br><span class="line">    <span class="keyword">return</span> StreamingResponse(</span><br><span class="line">        generate_large_file(),</span><br><span class="line">        media_type=<span class="string">&quot;text/plain&quot;</span>,</span><br><span class="line">        headers=&#123;<span class="string">&quot;Content-Disposition&quot;</span>: <span class="string">&quot;attachment; filename=bigfile.txt&quot;</span>&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/download/&#123;file_name&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">download</span>(<span class="params">file_name: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">return</span> FileResponse(</span><br><span class="line">        path=<span class="string">f&quot;/data/<span class="subst">&#123;file_name&#125;</span>&quot;</span>,</span><br><span class="line">        filename=<span class="string">&quot;download.zip&quot;</span>,</span><br><span class="line">        media_type=<span class="string">&quot;application/octet-stream&quot;</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>StreamingResponse</code>适合大文件传输，避免内存溢出  </li>
+<li><code>FileResponse</code>自动处理范围请求（Range requests）  </li>
+<li>关键参数：<ul>
+<li><code>media_type</code>：指定MIME类型</li>
+<li><code>headers</code>：设置下载头信息</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-响应头与Cookie控制"><a href="#3-响应头与Cookie控制" class="headerlink" title="3.响应头与Cookie控制"></a>3.响应头与Cookie控制</h2><h3 id="3-1-自定义响应头"><a href="#3-1-自定义响应头" class="headerlink" title="3.1 自定义响应头"></a>3.1 自定义响应头</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/headers&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">set_headers</span>(<span class="params">response: Response</span>):</span><br><span class="line">    response.headers[<span class="string">&quot;X-Custom-Header&quot;</span>] = <span class="string">&quot;value&quot;</span></span><br><span class="line">    response.headers[<span class="string">&quot;Cache-Control&quot;</span>] = <span class="string">&quot;max-age=3600&quot;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;status&quot;</span>: <span class="string">&quot;headers set&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-Cookie操作"><a href="#3-2-Cookie操作" class="headerlink" title="3.2 Cookie操作"></a>3.2 Cookie操作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/login&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    content = &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;登录成功&quot;</span>&#125;</span><br><span class="line">    response = JSONResponse(content=content)</span><br><span class="line">    response.set_cookie(key=<span class="string">&quot;token&quot;</span>, value=<span class="string">&quot;abc123&quot;</span>, max_age=<span class="number">3600</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过<code>Response</code>对象直接操作头信息和Cookie  </li>
+<li>安全建议：<ul>
+<li>敏感Cookie设置<code>httponly=True</code></li>
+<li>生产环境启用<code>secure=True</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="4-高级配置技巧"><a href="#4-高级配置技巧" class="headerlink" title="4.高级配置技巧"></a>4.高级配置技巧</h2><h3 id="4-1-性能优化"><a href="#4-1-性能优化" class="headerlink" title="4.1 性能优化"></a>4.1 性能优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/fast-json&quot;</span>, response_class=ORJSONResponse</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">optimized_response</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;data&quot;</span>: [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>)]&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>ORJSONResponse</code>替代默认JSON解析器，提升3-5倍序列化速度  </li>
+<li>避免在响应类中做复杂数据转换</li>
+</ul>
+<h3 id="4-2-媒体类型覆盖"><a href="#4-2-媒体类型覆盖" class="headerlink" title="4.2 媒体类型覆盖"></a>4.2 媒体类型覆盖</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/xml-data&quot;</span>, response_class=Response</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">xml_response</span>():</span><br><span class="line">    content = <span class="string">&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot;?&gt;&lt;data&gt;&lt;item&gt;test&lt;/item&gt;&lt;/data&gt;&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> Response(content=content, media_type=<span class="string">&quot;application/xml&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过<code>media_type</code>参数强制指定响应格式  </li>
+<li>支持自定义MIME类型（如<code>application/vnd.ms-excel</code>）</li>
+</ul>
+<h2 id="5-生产环境注意事项"><a href="#5-生产环境注意事项" class="headerlink" title="5.生产环境注意事项"></a>5.生产环境注意事项</h2><ol>
+<li><strong>安全头配置</strong>：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">response.headers.update(&#123;</span><br><span class="line">    <span class="string">&quot;Strict-Transport-Security&quot;</span>: <span class="string">&quot;max-age=31536000&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Security-Policy&quot;</span>: <span class="string">&quot;default-src &#x27;self&#x27;&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><strong>文件传输</strong>：<ul>
+<li>大文件使用分块传输编码</li>
+<li>限制文件下载目录访问权限</li>
+</ul>
+</li>
+<li><strong>性能监控</strong>：<ul>
+<li>添加<code>X-Response-Time</code>头记录处理耗时</li>
+<li>使用APM工具跟踪响应延迟</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>测试命令示例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试流式响应</span></span><br><span class="line">curl http://localhost:8000/stream --output largefile.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试头信息</span></span><br><span class="line">curl -i http://localhost:8000/headers</span><br></pre></td></tr></table></figure></blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8851%EF%BC%89/" rel="prev" title="FastAPI自学教程（51） - 直接返回响应">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（51） - 直接返回响应
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8853%EF%BC%89/" rel="next" title="FastAPI自学教程（53） - OpenAPI额外响应配置">
+      FastAPI自学教程（53） - OpenAPI额外响应配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1.基础响应类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%B5%81%E5%BC%8F%E5%93%8D%E5%BA%94%E4%B8%8E%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2.流式响应与文件处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%93%8D%E5%BA%94%E5%A4%B4%E4%B8%8ECookie%E6%8E%A7%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">3.响应头与Cookie控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 自定义响应头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Cookie%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Cookie操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">4.高级配置技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 性能优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B%E8%A6%86%E7%9B%96"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 媒体类型覆盖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">5.生产环境注意事项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
