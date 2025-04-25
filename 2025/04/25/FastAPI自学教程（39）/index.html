@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. 基础集成配置123456from fastapi.security import OAuth2PasswordBeareroauth2_scheme &#x3D; OAuth2PasswordBearer(tokenUrl&#x3D;&quot;token&quot;)SECRET_KEY &#x3D; &quot;09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI自学教程（39） - OAuth2密码哈希与JWT令牌验证">
+<meta property="og:url" content="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8839%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1. 基础集成配置123456from fastapi.security import OAuth2PasswordBeareroauth2_scheme &#x3D; OAuth2PasswordBearer(tokenUrl&#x3D;&quot;token&quot;)SECRET_KEY &#x3D; &quot;09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-25T03:07:41.000Z">
+<meta property="article:modified_time" content="2025-04-25T03:07:55.457Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta property="article:tag" content="Security">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8839%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>FastAPI自学教程（39） - OAuth2密码哈希与JWT令牌验证 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8839%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastAPI自学教程（39） - OAuth2密码哈希与JWT令牌验证
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-25 11:07:41 / 修改时间：11:07:55" itemprop="dateCreated datePublished" datetime="2025-04-25T11:07:41+08:00">2025-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础集成配置"><a href="#1-基础集成配置" class="headerlink" title="1. 基础集成配置"></a>1. 基础集成配置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.security <span class="keyword">import</span> OAuth2PasswordBearer</span><br><span class="line">oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="string">&quot;token&quot;</span>)</span><br><span class="line"></span><br><span class="line">SECRET_KEY = <span class="string">&quot;09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7&quot;</span></span><br><span class="line">ALGORITHM = <span class="string">&quot;HS256&quot;</span></span><br><span class="line">ACCESS_TOKEN_EXPIRE_MINUTES = <span class="number">30</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>OAuth2PasswordBearer</code>创建OAuth2密码流认证方案，自动处理Authorization头的Bearer Token  </li>
+<li>密钥生成：推荐使用<code>openssl rand -hex 32</code>生成高强度密钥  </li>
+<li>JWT配置：设置HS256签名算法与30分钟令牌有效期  </li>
+</ul>
+<p>流程图：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[客户端请求] --&gt; B&#123;携带有效JWT?&#125;</span><br><span class="line">    B --&gt;|是| C[解码验证签名]</span><br><span class="line">    B --&gt;|否| D[返回401错误]</span><br><span class="line">    C --&gt; E&#123;令牌未过期?&#125;</span><br><span class="line">    E --&gt;|是| F[提取用户信息]</span><br><span class="line">    E --&gt;|否| D</span><br><span class="line">    F --&gt; G[执行路径操作]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-密码哈希处理"><a href="#2-密码哈希处理" class="headerlink" title="2. 密码哈希处理"></a>2. 密码哈希处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> passlib.context <span class="keyword">import</span> CryptContext</span><br><span class="line">pwd_context = CryptContext(schemes=[<span class="string">&quot;bcrypt&quot;</span>], deprecated=<span class="string">&quot;auto&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">verify_password</span>(<span class="params">plain_pwd, hashed_pwd</span>):</span><br><span class="line">    <span class="keyword">return</span> pwd_context.verify(plain_pwd, hashed_pwd)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_password_hash</span>(<span class="params">password</span>):</span><br><span class="line">    <span class="keyword">return</span> pwd_context.<span class="built_in">hash</span>(password)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>passlib</code>库的Bcrypt算法实现密码哈希  </li>
+<li>哈希验证流程：  <ol>
+<li>用户注册时生成<code>hashed_password</code>存入数据库  </li>
+<li>登录时通过<code>verify_password</code>比对明文密码与哈希值  </li>
+<li>防止密码明文泄露，即使数据库被盗也无法逆向破解  </li>
+</ol>
+</li>
+</ul>
+<h2 id="3-JWT令牌生成与验证"><a href="#3-JWT令牌生成与验证" class="headerlink" title="3. JWT令牌生成与验证"></a>3. JWT令牌生成与验证</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta, timezone</span><br><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_access_token</span>(<span class="params">data: <span class="built_in">dict</span>, expires_delta: timedelta</span>):</span><br><span class="line">    to_encode = data.copy()</span><br><span class="line">    expire = datetime.now(timezone.utc) + expires_delta</span><br><span class="line">    to_encode.update(&#123;<span class="string">&quot;exp&quot;</span>: expire&#125;)</span><br><span class="line">    <span class="keyword">return</span> jwt.encode(to_encode, SECRET_KEY, ALGORITHM)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_current_user</span>(<span class="params">token: <span class="built_in">str</span> = Depends(<span class="params">oauth2_scheme</span>)</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])</span><br><span class="line">        username = payload.get(<span class="string">&quot;sub&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> get_user(fake_db, username)</span><br><span class="line">    <span class="keyword">except</span> InvalidTokenError:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(<span class="number">401</span>, <span class="string">&quot;无效令牌&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>令牌生成：包含用户标识(sub)、签发时间(iat)、过期时间(exp)等标准声明  </li>
+<li>验证机制：自动检查签名有效性、过期时间和用户状态  </li>
+<li>用户注入：通过依赖项将解码后的用户对象注入路径操作函数  </li>
+</ul>
+<h2 id="4-完整认证流程实现"><a href="#4-完整认证流程实现" class="headerlink" title="4. 完整认证流程实现"></a>4. 完整认证流程实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/token&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">form_data: OAuth2PasswordRequestForm = Depends(<span class="params"></span>)</span>):</span><br><span class="line">    user = authenticate_user(fake_db, form_data.username, form_data.password)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(<span class="number">401</span>, <span class="string">&quot;用户名或密码错误&quot;</span>)</span><br><span class="line">    access_token = create_access_token(</span><br><span class="line">        data=&#123;<span class="string">&quot;sub&quot;</span>: user.username&#125;,</span><br><span class="line">        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;access_token&quot;</span>: access_token, <span class="string">&quot;token_type&quot;</span>: <span class="string">&quot;bearer&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/users/me&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_users_me</span>(<span class="params">current_user: User = Depends(<span class="params">get_current_active_user</span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> current_user</span><br></pre></td></tr></table></figure>
+<ul>
+<li>登录流程：验证凭证 → 生成JWT → 返回Bearer令牌  </li>
+<li>用户状态检查：通过<code>get_current_active_user</code>验证用户是否激活  </li>
+<li>OpenAPI集成：自动生成Swagger UI的Authorize按钮和测试表单  </li>
+</ul>
+<h2 id="5-生产环境注意事项"><a href="#5-生产环境注意事项" class="headerlink" title="5. 生产环境注意事项"></a>5. 生产环境注意事项</h2><ol>
+<li><strong>密钥管理</strong>：使用环境变量存储密钥，禁止硬编码  </li>
+<li><strong>传输安全</strong>：必须启用HTTPS防止中间人攻击  </li>
+<li><strong>令牌存储</strong>：客户端应使用HttpOnly Secure Cookie存储  </li>
+<li><strong>刷新令牌</strong>：建议实现令牌刷新机制，减少长期令牌风险  </li>
+<li><strong>监控审计</strong>：记录异常登录尝试和令牌验证失败事件  </li>
+</ol>
+<blockquote>
+<p>测试命令示例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取令牌</span></span><br><span class="line">curl -X POST -d <span class="string">&quot;username=johndoe&amp;password=secret&quot;</span> http://localhost:8000/token</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问受保护端点</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer YOUR_TOKEN&quot;</span> http://localhost:8000/users/me</span><br></pre></td></tr></table></figure></blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+              <a href="/tags/Security/" rel="tag"># Security</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8837%EF%BC%89/" rel="prev" title="FastAPI自学教程（37） - 获取当前用户信息">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（37） - 获取当前用户信息
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8838%EF%BC%89/" rel="next" title="FastAPI自学教程（38） - 简单OAuth2密码与Bearer验证实现">
+      FastAPI自学教程（38） - 简单OAuth2密码与Bearer验证实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E9%9B%86%E6%88%90%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1. 基础集成配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AF%86%E7%A0%81%E5%93%88%E5%B8%8C%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2. 密码哈希处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-JWT%E4%BB%A4%E7%89%8C%E7%94%9F%E6%88%90%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">3. JWT令牌生成与验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%8C%E6%95%B4%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">4. 完整认证流程实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">5. 生产环境注意事项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
