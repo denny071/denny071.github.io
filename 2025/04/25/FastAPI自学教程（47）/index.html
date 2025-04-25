@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. 基础用法123456789from fastapi.testclient import TestClientfrom main import appclient &#x3D; TestClient(app)def test_read_root():    response &#x3D; client.get(&quot;&#x2F;&quot;)    assert response.status_code &#x3D;&#x3D; 200">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI自学教程（47） - 测试机制">
+<meta property="og:url" content="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8847%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1. 基础用法123456789from fastapi.testclient import TestClientfrom main import appclient &#x3D; TestClient(app)def test_read_root():    response &#x3D; client.get(&quot;&#x2F;&quot;)    assert response.status_code &#x3D;&#x3D; 200">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-25T13:49:37.000Z">
+<meta property="article:modified_time" content="2025-04-25T13:57:00.439Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8847%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>FastAPI自学教程（47） - 测试机制 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8847%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastAPI自学教程（47） - 测试机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-25 21:49:37 / 修改时间：21:57:00" itemprop="dateCreated datePublished" datetime="2025-04-25T21:49:37+08:00">2025-04-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础用法"><a href="#1-基础用法" class="headerlink" title="1. 基础用法"></a>1. 基础用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi.testclient <span class="keyword">import</span> TestClient</span><br><span class="line"><span class="keyword">from</span> main <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line">client = TestClient(app)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_read_root</span>():</span><br><span class="line">    response = client.get(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">200</span></span><br><span class="line">    <span class="keyword">assert</span> response.json() == &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>TestClient</code>模拟HTTP请求，需安装<code>httpx</code>库  </li>
+<li>测试流程：  <pre class="mermaid">  graph TD
+  A[初始化TestClient] --> B[发送模拟请求]
+  B --> C[接收响应]
+  C --> D{断言验证}
+  D -->|通过| E[测试成功]
+  D -->|失败| F[抛出异常]</pre></li>
+<li>核心功能：  <ul>
+<li>支持所有HTTP方法（GET/POST/PUT等）  </li>
+<li>自动处理请求/响应序列化  </li>
+<li>与pytest完美集成</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-带参数的端点测试"><a href="#2-带参数的端点测试" class="headerlink" title="2. 带参数的端点测试"></a>2. 带参数的端点测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_read_item</span>():</span><br><span class="line">    item_id = <span class="number">42</span></span><br><span class="line">    response = client.get(<span class="string">f&quot;/items/<span class="subst">&#123;item_id&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">200</span></span><br><span class="line">    <span class="keyword">assert</span> response.json() == &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_invalid_item</span>():</span><br><span class="line">    response = client.get(<span class="string">&quot;/items/foo&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">422</span>  <span class="comment"># 验证失败状态码</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>路径参数验证：  <ul>
+<li>自动检测类型错误（如字符串传递到int参数）  </li>
+<li>返回422状态码表示参数校验失败  </li>
+</ul>
+</li>
+<li>查询参数测试：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_query_param</span>():</span><br><span class="line">    response = client.get(<span class="string">&quot;/items/5?q=test&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> <span class="string">&quot;q&quot;</span> <span class="keyword">in</span> response.json()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="3-请求体与响应验证"><a href="#3-请求体与响应验证" class="headerlink" title="3. 请求体与响应验证"></a>3. 请求体与响应验证</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_create_item</span>():</span><br><span class="line">    test_data = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Test Item&quot;</span>, <span class="string">&quot;price&quot;</span>: <span class="number">9.99</span>&#125;</span><br><span class="line">    response = client.post(<span class="string">&quot;/items/&quot;</span>, json=test_data)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">201</span></span><br><span class="line">    <span class="keyword">assert</span> response.json()[<span class="string">&quot;name&quot;</span>] == test_data[<span class="string">&quot;name&quot;</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>支持JSON请求体测试，自动验证Pydantic模型约束  </li>
+<li>响应验证要点：  <ul>
+<li>状态码校验  </li>
+<li>响应数据结构校验  </li>
+<li>业务逻辑结果校验  </li>
+</ul>
+</li>
+</ul>
+<h2 id="4-依赖项与数据库测试"><a href="#4-依赖项与数据库测试" class="headerlink" title="4. 依赖项与数据库测试"></a>4. 依赖项与数据库测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> unittest.mock <span class="keyword">import</span> Mock</span><br><span class="line"><span class="keyword">from</span> dependencies <span class="keyword">import</span> get_db</span><br><span class="line"></span><br><span class="line">app.dependency_overrides[get_db] = <span class="keyword">lambda</span>: Mock()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_with_mocked_db</span>():</span><br><span class="line">    response = client.get(<span class="string">&quot;/users/&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">200</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>依赖注入覆盖：  <ul>
+<li>使用<code>dependency_overrides</code>替换真实依赖  </li>
+<li>适合模拟数据库连接、认证服务等  </li>
+</ul>
+</li>
+<li>事务测试建议：  <ul>
+<li>每个测试用例使用独立事务  </li>
+<li>测试后自动回滚变更  </li>
+</ul>
+</li>
+</ul>
+<h2 id="5-高级测试技巧"><a href="#5-高级测试技巧" class="headerlink" title="5. 高级测试技巧"></a>5. 高级测试技巧</h2><h3 id="5-1-参数化测试"><a href="#5-1-参数化测试" class="headerlink" title="5.1 参数化测试"></a>5.1 参数化测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="meta">@pytest.mark.parametrize(<span class="params"><span class="string">&quot;item_id,status&quot;</span>, [</span></span></span><br><span class="line"><span class="params"><span class="meta">    (<span class="params"><span class="number">1</span>, <span class="number">200</span></span>), </span></span></span><br><span class="line"><span class="params"><span class="meta">    (<span class="params"><span class="number">999</span>, <span class="number">404</span></span>),</span></span></span><br><span class="line"><span class="params"><span class="meta">    (<span class="params"><span class="string">&quot;abc&quot;</span>, <span class="number">422</span></span>)</span></span></span><br><span class="line"><span class="params"><span class="meta">]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_multiple_cases</span>(<span class="params">item_id, status</span>):</span><br><span class="line">    response = client.get(<span class="string">f&quot;/items/<span class="subst">&#123;item_id&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == status</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-异常处理测试"><a href="#5-2-异常处理测试" class="headerlink" title="5.2 异常处理测试"></a>5.2 异常处理测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_auth_failure</span>():</span><br><span class="line">    response = client.get(<span class="string">&quot;/secure&quot;</span>, headers=&#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">&quot;invalid&quot;</span>&#125;)</span><br><span class="line">    <span class="keyword">assert</span> response.status_code == <span class="number">403</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="string">&quot;detail&quot;</span> <span class="keyword">in</span> response.json()</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>测试命令示例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行所有测试</span></span><br><span class="line">pytest -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行单个测试模块</span></span><br><span class="line">pytest tests/test_main.py</span><br></pre></td></tr></table></figure></blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+              <a href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag"># 测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8846%EF%BC%89/" rel="prev" title="FastAPI自学教程（46） - 静态文件处理">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（46） - 静态文件处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8848%EF%BC%89/" rel="next" title="FastAPI自学教程（48） - 调试机制">
+      FastAPI自学教程（48） - 调试机制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">1. 基础用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E7%AB%AF%E7%82%B9%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">2. 带参数的端点测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AF%B7%E6%B1%82%E4%BD%93%E4%B8%8E%E5%93%8D%E5%BA%94%E9%AA%8C%E8%AF%81"><span class="nav-number">3.</span> <span class="nav-text">3. 请求体与响应验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BE%9D%E8%B5%96%E9%A1%B9%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">4. 依赖项与数据库测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%AB%98%E7%BA%A7%E6%B5%8B%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">5.</span> <span class="nav-text">5. 高级测试技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%8F%82%E6%95%B0%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 参数化测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%B5%8B%E8%AF%95"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 异常处理测试</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
