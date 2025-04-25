@@ -212,7 +212,15 @@
 <li>路径操作函数通过<code>Depends()</code>注入已验证的用户对象  </li>
 </ul>
 <p>流程图：  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[请求到达] --&gt; B&#123;Authorization头存在?&#125;</span><br><span class="line">    B --&gt;|是| C[提取Bearer Token]</span><br><span class="line">    B --&gt;|否| D[返回401错误]</span><br><span class="line">    C --&gt; E[JWT解码验证]</span><br><span class="line">    E --&gt;|成功| F[获取用户数据库记录]</span><br><span class="line">    E --&gt;|失败| G[返回401错误]</span><br><span class="line">    F --&gt;|用户存在| H[返回用户对象]</span><br><span class="line">    F --&gt;|用户不存在| G</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+    A[请求到达] --> B{Authorization头存在?}
+    B -->|是| C[提取Bearer Token]
+    B -->|否| D[返回401错误]
+    C --> E[JWT解码验证]
+    E -->|成功| F[获取用户数据库记录]
+    E -->|失败| G[返回401错误]
+    F -->|用户存在| H[返回用户对象]
+    F -->|用户不存在| G</pre>
 
 <h2 id="2-带类型的路径参数"><a href="#2-带类型的路径参数" class="headerlink" title="2. 带类型的路径参数"></a>2. 带类型的路径参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    username: <span class="built_in">str</span></span><br><span class="line">    email: <span class="built_in">str</span> | <span class="literal">None</span> = <span class="literal">None</span></span><br><span class="line">    disabled: <span class="built_in">bool</span> | <span class="literal">None</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_current_active_user</span>(<span class="params">current_user: User = Depends(<span class="params">get_current_user</span>)</span>):</span><br><span class="line">    <span class="keyword">if</span> current_user.disabled:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">400</span>, detail=<span class="string">&quot;未激活用户&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> current_user</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/active-users/me&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_active_users_me</span>(<span class="params">user: User = Depends(<span class="params">get_current_active_user</span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> user</span><br></pre></td></tr></table></figure>
 <ul>
@@ -257,8 +265,8 @@
       <i class="fa fa-chevron-left"></i> FastAPI自学教程（36） - 安全机制第一步
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8839%EF%BC%89/" rel="next" title="FastAPI自学教程（39） - OAuth2密码哈希与JWT令牌验证">
-      FastAPI自学教程（39） - OAuth2密码哈希与JWT令牌验证 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/04/25/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8838%EF%BC%89/" rel="next" title="FastAPI自学教程（38） - 简单OAuth2密码与Bearer验证实现">
+      FastAPI自学教程（38） - 简单OAuth2密码与Bearer验证实现 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

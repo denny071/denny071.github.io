@@ -223,7 +223,8 @@
 <li>仅影响该路由组下的路径操作</li>
 <li>支持分层依赖管理</li>
 </ul>
-<h2 id="4-依赖执行顺序"><a href="#4-依赖执行顺序" class="headerlink" title="4.依赖执行顺序"></a>4.依赖执行顺序</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    A[应用级依赖] --&gt; B[路由级依赖] --&gt; C[路径装饰器依赖] --&gt; D[路径操作函数]</span><br></pre></td></tr></table></figure>
+<h2 id="4-依赖执行顺序"><a href="#4-依赖执行顺序" class="headerlink" title="4.依赖执行顺序"></a>4.依赖执行顺序</h2><pre class="mermaid">graph LR
+    A[应用级依赖] --> B[路由级依赖] --> C[路径装饰器依赖] --> D[路径操作函数]</pre>
 <ul>
 <li>执行顺序为：应用 → 路由 → 装饰器 → 处理函数</li>
 <li>同级依赖按声明顺序执行</li>

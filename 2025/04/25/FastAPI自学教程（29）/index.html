@@ -209,7 +209,11 @@
 <ul>
 <li>使用<code>Depends()</code>声明依赖项，将参数注入路径操作函数  </li>
 <li>依赖项函数结构与路径操作函数相同，可接收查询参数、请求体等参数  </li>
-<li>请求流程：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">  A[客户端请求] --&gt; B[FastAPI解析依赖项]</span><br><span class="line">  B --&gt; C[执行common_params函数]</span><br><span class="line">  C --&gt; D[返回处理后的字典]</span><br><span class="line">  D --&gt; E[注入read_items的commons参数]</span><br></pre></td></tr></table></figure>
+<li>请求流程：  <pre class="mermaid">  graph TD
+  A[客户端请求] --> B[FastAPI解析依赖项]
+  B --> C[执行common_params函数]
+  C --> D[返回处理后的字典]
+  D --> E[注入read_items的commons参数]</pre>
 
 </li>
 </ul>
