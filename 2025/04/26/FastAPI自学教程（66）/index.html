@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.基础用法1234567891011from fastapi import FastAPI, WebSocketfrom fastapi.responses import HTMLResponseapp &#x3D; FastAPI()@app.websocket(&quot;&#x2F;ws&quot;)async def websocket_endpoint(websocket: WebSocket):">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI自学教程（66） - WebSockets实时通信">
+<meta property="og:url" content="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8866%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1.基础用法1234567891011from fastapi import FastAPI, WebSocketfrom fastapi.responses import HTMLResponseapp &#x3D; FastAPI()@app.websocket(&quot;&#x2F;ws&quot;)async def websocket_endpoint(websocket: WebSocket):">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-26T02:20:20.000Z">
+<meta property="article:modified_time" content="2025-04-26T02:29:16.129Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8866%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>FastAPI自学教程（66） - WebSockets实时通信 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8866%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastAPI自学教程（66） - WebSockets实时通信
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-26 10:20:20 / 修改时间：10:29:16" itemprop="dateCreated datePublished" datetime="2025-04-26T10:20:20+08:00">2025-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础用法"><a href="#1-基础用法" class="headerlink" title="1.基础用法"></a>1.基础用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, WebSocket</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.websocket(<span class="params"><span class="string">&quot;/ws&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">websocket_endpoint</span>(<span class="params">websocket: WebSocket</span>):</span><br><span class="line">    <span class="keyword">await</span> websocket.accept()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data = <span class="keyword">await</span> websocket.receive_text()</span><br><span class="line">        <span class="keyword">await</span> websocket.send_text(<span class="string">f&quot;Message text was: <span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>@app.websocket</code>装饰器声明WebSocket路由，通过<code>WebSocket</code>类处理连接   </li>
+<li>必须调用<code>await websocket.accept()</code>接受客户端连接请求   </li>
+<li>通过无限循环实现持续通信，支持<code>receive_text()</code>/<code>receive_bytes()</code>等接收方式   </li>
+</ul>
+<p>流程图：  </p>
+<pre class="mermaid">graph TD
+    A[客户端连接] --> B[调用accept接受连接]
+    B --> C{接收消息循环}
+    C -->|文本/二进制数据| D[处理业务逻辑]
+    D --> E[发送响应]
+    C -->|断开请求| F[关闭连接]</pre>
+
+<h2 id="2-连接管理"><a href="#2-连接管理" class="headerlink" title="2.连接管理"></a>2.连接管理</h2><h3 id="2-1-多客户端管理"><a href="#2-1-多客户端管理" class="headerlink" title="2.1 多客户端管理"></a>2.1 多客户端管理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConnectionManager</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.active_connections: <span class="built_in">list</span>[WebSocket] = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self, websocket: WebSocket</span>):</span><br><span class="line">        <span class="keyword">await</span> websocket.accept()</span><br><span class="line">        <span class="variable language_">self</span>.active_connections.append(websocket)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">broadcast</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="keyword">for</span> connection <span class="keyword">in</span> <span class="variable language_">self</span>.active_connections:</span><br><span class="line">            <span class="keyword">await</span> connection.send_text(message)</span><br><span class="line"></span><br><span class="line">manager = ConnectionManager()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.websocket(<span class="params"><span class="string">&quot;/chat/&#123;room_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">chat_room</span>(<span class="params">websocket: WebSocket, room_id: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">await</span> manager.connect(websocket)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            message = <span class="keyword">await</span> websocket.receive_text()</span><br><span class="line">            <span class="keyword">await</span> manager.broadcast(<span class="string">f&quot;[<span class="subst">&#123;room_id&#125;</span>]: <span class="subst">&#123;message&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> WebSocketDisconnect:</span><br><span class="line">        manager.disconnect(websocket)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过自定义类管理活跃连接，支持广播消息   </li>
+<li>使用<code>WebSocketDisconnect</code>异常处理客户端断开事件   </li>
+</ul>
+<h3 id="2-2-路径参数集成"><a href="#2-2-路径参数集成" class="headerlink" title="2.2 路径参数集成"></a>2.2 路径参数集成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.websocket(<span class="params"><span class="string">&quot;/user/&#123;user_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">user_channel</span>(<span class="params">websocket: WebSocket, user_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">await</span> websocket.accept()</span><br><span class="line">    <span class="comment"># 根据user_id进行个性化处理</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>路径参数自动注入处理函数，实现动态路由   </li>
+</ul>
+<h2 id="3-生产环境建议"><a href="#3-生产环境建议" class="headerlink" title="3.生产环境建议"></a>3.生产环境建议</h2><ol>
+<li><p><strong>部署配置</strong>：  </p>
+<ul>
+<li>使用uvicorn作为ASGI服务器：<code>uvicorn main:app --reload</code>   </li>
+<li>设置<code>--ws-ping-interval</code>参数维持长连接   </li>
+</ul>
+</li>
+<li><p><strong>安全增强</strong>：  </p>
+<ul>
+<li>限制连接速率防止DDoS攻击  </li>
+<li>使用wss协议加密WebSocket通信   </li>
+</ul>
+</li>
+<li><p><strong>调试工具</strong>：  </p>
+<ul>
+<li>通过Apifox等工具测试WebSocket接口   </li>
+<li>浏览器开发者工具实时查看WebSocket帧   </li>
+</ul>
+</li>
+<li><p><strong>性能优化</strong>：  </p>
+<ul>
+<li>异步处理耗时操作避免阻塞事件循环  </li>
+<li>二进制传输替代文本格式降低带宽消耗   </li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>测试命令示例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">uvicorn main:app --reload --port 8000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用websockets客户端测试</span></span><br><span class="line">python -m websockets ws://localhost:8000/ws</span><br></pre></td></tr></table></figure></blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8865%EF%BC%89/" rel="prev" title="FastAPI自学教程（65） - 模板系统详解">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（65） - 模板系统详解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8867%EF%BC%89/" rel="next" title="FastAPI自学教程（67） - 生命周期事件">
+      FastAPI自学教程（67） - 生命周期事件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">1.基础用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2.连接管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%A4%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 多客户端管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0%E9%9B%86%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 路径参数集成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%BB%BA%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">3.生产环境建议</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
