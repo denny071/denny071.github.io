@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.数据插入核心流程graph TD     A[创建模型实例] --&gt; B[打开Session会话]     B --&gt; C[添加实例到Session]     C --&gt; D[提交事务]     D --&gt; E[刷新对象状态]  使用SQLAlchemy会话管理数据库操作 通过session.add()批量添加多个对象  2.基础插入操作1234567891011from sqlmodel i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLModel自学教程（6） - 数据插入操作">
+<meta property="og:url" content="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%886%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1.数据插入核心流程graph TD     A[创建模型实例] --&gt; B[打开Session会话]     B --&gt; C[添加实例到Session]     C --&gt; D[提交事务]     D --&gt; E[刷新对象状态]  使用SQLAlchemy会话管理数据库操作 通过session.add()批量添加多个对象  2.基础插入操作1234567891011from sqlmodel i">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-26T05:58:45.000Z">
+<meta property="article:modified_time" content="2025-04-26T05:59:34.620Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="SQLModel">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%886%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>SQLModel自学教程（6） - 数据插入操作 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%886%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQLModel自学教程（6） - 数据插入操作
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-26 13:58:45 / 修改时间：13:59:34" itemprop="dateCreated datePublished" datetime="2025-04-26T13:58:45+08:00">2025-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-数据插入核心流程"><a href="#1-数据插入核心流程" class="headerlink" title="1.数据插入核心流程"></a>1.数据插入核心流程</h2><pre class="mermaid">graph TD
+    A[创建模型实例] --> B[打开Session会话]
+    B --> C[添加实例到Session]
+    C --> D[提交事务]
+    D --> E[刷新对象状态]</pre>
+<ul>
+<li>使用SQLAlchemy会话管理数据库操作</li>
+<li>通过<code>session.add()</code>批量添加多个对象</li>
+</ul>
+<h2 id="2-基础插入操作"><a href="#2-基础插入操作" class="headerlink" title="2.基础插入操作"></a>2.基础插入操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlmodel <span class="keyword">import</span> Session, SQLModel</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建英雄实例</span></span><br><span class="line">hero_1 = Hero(name=<span class="string">&quot;Deadpond&quot;</span>, secret_name=<span class="string">&quot;Dive Wilson&quot;</span>)</span><br><span class="line">hero_2 = Hero(name=<span class="string">&quot;Spider-Boy&quot;</span>, secret_name=<span class="string">&quot;Pedro Parqueador&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Session(engine) <span class="keyword">as</span> session:</span><br><span class="line">    session.add(hero_1)</span><br><span class="line">    session.add(hero_2)</span><br><span class="line">    session.commit()</span><br><span class="line">    session.refresh(hero_1)  <span class="comment"># 获取数据库生成的ID</span></span><br></pre></td></tr></table></figure>
+<p><strong>关键步骤说明</strong>：</p>
+<ul>
+<li><code>session.add()</code> 将对象添加到待提交队列</li>
+<li><code>session.commit()</code> 执行实际数据库写入</li>
+<li><code>session.refresh()</code> 更新对象状态（如自增ID）</li>
+</ul>
+<h2 id="3-批量插入优化"><a href="#3-批量插入优化" class="headerlink" title="3.批量插入优化"></a>3.批量插入优化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 批量添加示例</span></span><br><span class="line">heroes = [</span><br><span class="line">    Hero(name=<span class="string">&quot;Rusty-Man&quot;</span>, secret_name=<span class="string">&quot;Tommy Sharp&quot;</span>, age=<span class="number">48</span>),</span><br><span class="line">    Hero(name=<span class="string">&quot;Batman&quot;</span>, secret_name=<span class="string">&quot;Bruce Wayne&quot;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Session(engine) <span class="keyword">as</span> session:</span><br><span class="line">    session.add_all(heroes)</span><br><span class="line">    session.commit()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>add_all()</code>提升批量插入效率</li>
+<li>建议每500-1000条记录提交一次事务</li>
+</ul>
+<h2 id="4-关联数据插入"><a href="#4-关联数据插入" class="headerlink" title="4.关联数据插入"></a>4.关联数据插入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建团队与英雄关联</span></span><br><span class="line">team_z = Team(name=<span class="string">&quot;Z-Force&quot;</span>, headquarters=<span class="string">&quot;Sister Margaret&#x27;s Bar&quot;</span>)</span><br><span class="line">hero = Hero(name=<span class="string">&quot;Deadpond&quot;</span>, team_id=team_z.<span class="built_in">id</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Session(engine) <span class="keyword">as</span> session:</span><br><span class="line">    session.add(team_z)</span><br><span class="line">    session.commit()  <span class="comment"># 先提交团队获取ID</span></span><br><span class="line">    session.add(hero)</span><br><span class="line">    session.commit()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>外键关联需确保父对象已持久化</li>
+<li>推荐使用数据库级联操作替代手动ID管理</li>
+</ul>
+<h2 id="5-数据验证机制"><a href="#5-数据验证机制" class="headerlink" title="5.数据验证机制"></a>5.数据验证机制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlmodel <span class="keyword">import</span> Field</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Hero</span>(SQLModel, table=<span class="literal">True</span>):</span><br><span class="line">    name: <span class="built_in">str</span> = Field(nullable=<span class="literal">False</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    age: <span class="built_in">int</span> | <span class="literal">None</span> = Field(ge=<span class="number">0</span>, le=<span class="number">150</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>字段级验证（非空、唯一性等）</li>
+<li>类型注解自动执行数据验证</li>
+<li>自定义校验可通过<code>@validator</code>装饰器实现</li>
+</ul>
+<h2 id="6-错误处理实践"><a href="#6-错误处理实践" class="headerlink" title="6.错误处理实践"></a>6.错误处理实践</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    session.commit()</span><br><span class="line"><span class="keyword">except</span> IntegrityError:</span><br><span class="line">    session.rollback()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;唯一性约束冲突！&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> SQLAlchemyError <span class="keyword">as</span> e:</span><br><span class="line">    session.rollback()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;数据库错误：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>必须的事务回滚操作</li>
+<li>常见错误类型处理</li>
+</ul>
+<blockquote>
+<p>提示：完整示例代码建议参考<a target="_blank" rel="noopener" href="https://sqlmodel.tiangolo.com/tutorial/insert/">官方文档</a> ，生产环境推荐结合异步会话提升性能</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/SQLModel/" rel="tag"># SQLModel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%885%EF%BC%89/" rel="prev" title="SQLModel自学教程（5） - 数据库与表创建">
+      <i class="fa fa-chevron-left"></i> SQLModel自学教程（5） - 数据库与表创建
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%887%EF%BC%89/" rel="next" title="SQLModel自学教程（7） - 自动ID与数据刷新">
+      SQLModel自学教程（7） - 自动ID与数据刷新 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1.数据插入核心流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9F%BA%E7%A1%80%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">2.基础插入操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">3.批量插入优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5"><span class="nav-number">4.</span> <span class="nav-text">4.关联数据插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">5.数据验证机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">6.错误处理实践</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.基础查询流程graph TD     A[创建Session会话] --&gt; B[构造SELECT语句]     B --&gt; C[执行查询操作]     C --&gt; D[处理查询结果]  使用SQLAlchemy的select()函数构建查询  2.全表查询示例123456789from sqlmodel import select, Sessionwith Session(engine) as">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLModel自学教程（8） - 数据查询与SELECT">
+<meta property="og:url" content="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%888%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1.基础查询流程graph TD     A[创建Session会话] --&gt; B[构造SELECT语句]     B --&gt; C[执行查询操作]     C --&gt; D[处理查询结果]  使用SQLAlchemy的select()函数构建查询  2.全表查询示例123456789from sqlmodel import select, Sessionwith Session(engine) as">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-26T06:04:09.000Z">
+<meta property="article:modified_time" content="2025-04-26T06:04:19.824Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="SQLModel">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%888%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>SQLModel自学教程（8） - 数据查询与SELECT | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%888%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQLModel自学教程（8） - 数据查询与SELECT
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-26 14:04:09 / 修改时间：14:04:19" itemprop="dateCreated datePublished" datetime="2025-04-26T14:04:09+08:00">2025-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础查询流程"><a href="#1-基础查询流程" class="headerlink" title="1.基础查询流程"></a>1.基础查询流程</h2><pre class="mermaid">graph TD
+    A[创建Session会话] --> B[构造SELECT语句]
+    B --> C[执行查询操作]
+    C --> D[处理查询结果]</pre>
+<ul>
+<li>使用SQLAlchemy的<code>select()</code>函数构建查询</li>
+</ul>
+<h2 id="2-全表查询示例"><a href="#2-全表查询示例" class="headerlink" title="2.全表查询示例"></a>2.全表查询示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlmodel <span class="keyword">import</span> select, Session</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> Session(engine) <span class="keyword">as</span> session:</span><br><span class="line">    statement = select(Hero)</span><br><span class="line">    results = session.<span class="built_in">exec</span>(statement)</span><br><span class="line">    heroes = results.<span class="built_in">all</span>()</span><br><span class="line">    <span class="comment"># 输出所有英雄信息</span></span><br><span class="line">    <span class="keyword">for</span> hero <span class="keyword">in</span> heroes:</span><br><span class="line">        <span class="built_in">print</span>(hero)</span><br></pre></td></tr></table></figure>
+<p><strong>核心要点</strong>：</p>
+<ul>
+<li><code>select(Hero)</code> 等同于SQL的<code>SELECT * FROM hero</code></li>
+<li><code>session.exec()</code>执行查询，返回结果对象</li>
+<li><code>.all()</code>获取所有结果列表</li>
+</ul>
+<h2 id="3-字段筛选查询"><a href="#3-字段筛选查询" class="headerlink" title="3.字段筛选查询"></a>3.字段筛选查询</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅选择name和secret_name字段</span></span><br><span class="line">statement = select(Hero.name, Hero.secret_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 链式写法筛选年龄&gt;30的记录</span></span><br><span class="line">statement = select(Hero).where(Hero.age &gt; <span class="number">30</span>).order_by(Hero.name.desc())</span><br></pre></td></tr></table></figure>
+<p><strong>特性说明</strong>：</p>
+<ul>
+<li>支持显式指定查询字段</li>
+<li>使用<code>.where()</code>进行条件过滤</li>
+<li>通过<code>.order_by()</code>实现结果排序</li>
+</ul>
+<h2 id="4-结果处理技巧"><a href="#4-结果处理技巧" class="headerlink" title="4.结果处理技巧"></a>4.结果处理技巧</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取第一条记录</span></span><br><span class="line">first_hero = session.<span class="built_in">exec</span>(statement).first()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分页查询（每页5条，第3页）</span></span><br><span class="line">paginated = session.<span class="built_in">exec</span>(statement.limit(<span class="number">5</span>).offset(<span class="number">10</span>)).<span class="built_in">all</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计记录数</span></span><br><span class="line">count = session.<span class="built_in">exec</span>(statement).count()</span><br></pre></td></tr></table></figure>
+<p><strong>高级功能</strong>：</p>
+<ul>
+<li><code>.first()</code>获取首条记录</li>
+<li><code>.limit()</code>和<code>.offset()</code>实现分页</li>
+<li><code>.count()</code>统计匹配记录数</li>
+</ul>
+<h2 id="5-关联查询示例"><a href="#5-关联查询示例" class="headerlink" title="5.关联查询示例"></a>5.关联查询示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlmodel <span class="keyword">import</span> join</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多表关联查询（假设有Team表）</span></span><br><span class="line">statement = select(Hero, Team).join(Team)</span><br><span class="line">results = session.<span class="built_in">exec</span>(statement)</span><br><span class="line"><span class="keyword">for</span> hero, team <span class="keyword">in</span> results:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;hero.name&#125;</span> 属于 <span class="subst">&#123;team.name&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>关联查询要点</strong>：</p>
+<ul>
+<li>使用<code>join()</code>方法连接相关表</li>
+<li>结果返回元组形式数据</li>
+<li>支持自动解析外键关系</li>
+</ul>
+<h2 id="6-调试与优化"><a href="#6-调试与优化" class="headerlink" title="6.调试与优化"></a>6.调试与优化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看生成的SQL语句</span></span><br><span class="line"><span class="built_in">print</span>(statement)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用SQL日志（创建engine时设置）</span></span><br><span class="line">engine = create_engine(<span class="string">&quot;sqlite:///database.db&quot;</span>, echo=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>调试技巧</strong>：</p>
+<ul>
+<li>直接打印statement对象查看原生SQL</li>
+<li>通过<code>echo=True</code>记录所有SQL操作</li>
+<li>使用DB Browser验证查询结果</li>
+</ul>
+<blockquote>
+<p>提示：完整示例代码建议参考<a target="_blank" rel="noopener" href="https://sqlmodel.tiangolo.com/tutorial/select/">官方文档</a> ，复杂查询建议结合SQLAlchemy的查询构建器</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/SQLModel/" rel="tag"># SQLModel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%887%EF%BC%89/" rel="prev" title="SQLModel自学教程（7） - 自动ID与数据刷新">
+      <i class="fa fa-chevron-left"></i> SQLModel自学教程（7） - 自动ID与数据刷新
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/26/SQLModel%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%889%EF%BC%89/" rel="next" title="SQLModel自学教程（9） - WHERE条件查询">
+      SQLModel自学教程（9） - WHERE条件查询 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1.基础查询流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%A8%E8%A1%A8%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">2.全表查询示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AD%97%E6%AE%B5%E7%AD%9B%E9%80%89%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.</span> <span class="nav-text">3.字段筛选查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%BB%93%E6%9E%9C%E5%A4%84%E7%90%86%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">4.结果处理技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">5.关联查询示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%B0%83%E8%AF%95%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">6.调试与优化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
