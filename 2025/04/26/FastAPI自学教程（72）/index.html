@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"denny071.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.基础用法123456789101112131415161718from pydantic_settings import BaseSettingsfrom fastapi import FastAPIclass Settings(BaseSettings):    app_name: str &#x3D; &quot;Awesome API&quot;    admin_email: str    it">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastAPI自学教程（72） - 配置与环境变量管理">
+<meta property="og:url" content="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8872%EF%BC%89/index.html">
+<meta property="og:site_name" content="Denny的博客">
+<meta property="og:description" content="1.基础用法123456789101112131415161718from pydantic_settings import BaseSettingsfrom fastapi import FastAPIclass Settings(BaseSettings):    app_name: str &#x3D; &quot;Awesome API&quot;    admin_email: str    it">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-26T02:46:23.000Z">
+<meta property="article:modified_time" content="2025-04-26T03:03:44.652Z">
+<meta property="article:author" content="Denny">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8872%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-cn'
+  };
+</script>
+
+  <title>FastAPI自学教程（72） - 配置与环境变量管理 | Denny的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Denny的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Denny的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/archives/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
+    <link itemprop="mainEntityOfPage" href="http://denny071.github.io/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8872%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Denny">
+      <meta itemprop="description" content="Denny的博客，技术分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Denny的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastAPI自学教程（72） - 配置与环境变量管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-26 10:46:23 / 修改时间：11:03:44" itemprop="dateCreated datePublished" datetime="2025-04-26T10:46:23+08:00">2025-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础用法"><a href="#1-基础用法" class="headerlink" title="1.基础用法"></a>1.基础用法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic_settings <span class="keyword">import</span> BaseSettings</span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Settings</span>(<span class="title class_ inherited__">BaseSettings</span>):</span><br><span class="line">    app_name: <span class="built_in">str</span> = <span class="string">&quot;Awesome API&quot;</span></span><br><span class="line">    admin_email: <span class="built_in">str</span></span><br><span class="line">    items_per_user: <span class="built_in">int</span> = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">settings = Settings()</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/info&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">info</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&quot;app_name&quot;</span>: settings.app_name,</span><br><span class="line">        <span class="string">&quot;admin_email&quot;</span>: settings.admin_email,</span><br><span class="line">        <span class="string">&quot;items_per_user&quot;</span>: settings.items_per_user</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过继承<code>BaseSettings</code>创建配置模型，字段声明方式与Pydantic模型相同</li>
+<li>环境变量自动加载机制：不区分大小写读取系统环境变量（如<code>ADMIN_EMAIL</code>对应<code>admin_email</code>字段）</li>
+<li>默认值设置：未提供环境变量时使用类属性默认值</li>
+</ul>
+<p>流程图：  </p>
+<pre class="mermaid">graph TD
+    A[启动应用] --> B[读取环境变量]
+    B --> C{Pydantic验证}
+    C -->|验证通过| D[生成配置实例]
+    C -->|验证失败| E[抛出ValidationError]
+    D --> F[应用初始化]</pre>
+
+<h2 id="2-配置验证机制"><a href="#2-配置验证机制" class="headerlink" title="2.配置验证机制"></a>2.配置验证机制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> Field</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EnhancedSettings</span>(<span class="title class_ inherited__">BaseSettings</span>):</span><br><span class="line">    api_rate_limit: <span class="built_in">int</span> = Field(<span class="number">1000</span>, gt=<span class="number">0</span>, env=<span class="string">&quot;API_RATE_LIMIT&quot;</span>)</span><br><span class="line">    debug_mode: <span class="built_in">bool</span> = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>Field()</code>实现进阶验证：<ul>
+<li><code>gt=0</code>确保数值大于0</li>
+<li><code>env</code>显式指定环境变量名</li>
+</ul>
+</li>
+<li>类型自动转换：环境变量字符串自动转换为声明类型（如<code>&quot;true&quot;</code>→<code>bool</code>）</li>
+</ul>
+<h2 id="3-生产环境配置"><a href="#3-生产环境配置" class="headerlink" title="3.生产环境配置"></a>3.生产环境配置</h2><h3 id="3-1-多环境配置方案"><a href="#3-1-多环境配置方案" class="headerlink" title="3.1 多环境配置方案"></a>3.1 多环境配置方案</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># config/__init__.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">env = os.getenv(<span class="string">&quot;ENV&quot;</span>, <span class="string">&quot;dev&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> env == <span class="string">&quot;prod&quot;</span>:</span><br><span class="line">    <span class="keyword">from</span> .production <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">from</span> .development <span class="keyword">import</span> settings</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过环境变量<code>ENV</code>切换配置源</li>
+<li>开发/生产配置分离：<ul>
+<li>开发环境：使用代码内默认值</li>
+<li>生产环境：通过K8s Secrets或Vault注入敏感信息</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-敏感信息管理"><a href="#3-2-敏感信息管理" class="headerlink" title="3.2 敏感信息管理"></a>3.2 敏感信息管理</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># .env.prod</span><br><span class="line">ADMIN_EMAIL=admin@company.com</span><br><span class="line">DB_PASSWORD=5f4dcc3b5aa765d61d8327deb882cf99</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>.env</code>文件管理本地开发配置（需安装<code>python-dotenv</code>）</li>
+<li>生产环境建议通过12-Factor原则管理密钥</li>
+</ul>
+<h2 id="4-依赖注入模式"><a href="#4-依赖注入模式" class="headerlink" title="4.依赖注入模式"></a>4.依赖注入模式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> Depends</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_settings</span>():</span><br><span class="line">    <span class="keyword">return</span> settings</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/debug&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">debug</span>(<span class="params">conf: Settings = Depends(<span class="params">get_settings</span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;debug_mode&quot;</span>: conf.debug_mode&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优点：支持测试时覆盖依赖项<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">override_settings</span>():</span><br><span class="line">    <span class="keyword">return</span> Settings(admin_email=<span class="string">&quot;test@example.com&quot;</span>)</span><br><span class="line"></span><br><span class="line">app.dependency_overrides[get_settings] = override_settings</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="5-生产建议"><a href="#5-生产建议" class="headerlink" title="5.生产建议"></a>5.生产建议</h2><ol>
+<li><strong>安全存储</strong>：密钥应通过Vault等专用系统管理，避免硬编码</li>
+<li><strong>类型安全</strong>：所有配置字段必须声明类型，禁用<code>Optional</code>无约束类型</li>
+<li><strong>性能优化</strong>：使用<code>@lru_cache</code>缓存配置实例减少重复加载</li>
+<li><strong>文档集成</strong>：通过<code>model_config</code>添加字段说明提升可维护性<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Config</span>:</span><br><span class="line">    env_prefix = <span class="string">&quot;APP_&quot;</span></span><br><span class="line">    json_schema_extra = &#123;</span><br><span class="line">        <span class="string">&quot;example&quot;</span>: &#123;<span class="string">&quot;admin_email&quot;</span>: <span class="string">&quot;contact@example.com&quot;</span>&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<blockquote>
+<p>测试命令示例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 带环境变量启动</span></span><br><span class="line">ADMIN_EMAIL=<span class="string">&quot;admin@site.com&quot;</span> uvicorn main:app</span><br></pre></td></tr></table></figure></blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8871%EF%BC%89/" rel="prev" title="FastAPI自学教程（71） - 异步测试实践">
+      <i class="fa fa-chevron-left"></i> FastAPI自学教程（71） - 异步测试实践
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/26/FastAPI%E8%87%AA%E5%AD%A6%E6%95%99%E7%A8%8B%EF%BC%8873%EF%BC%89/" rel="next" title="FastAPI自学教程（73） - OpenAPI回调机制">
+      FastAPI自学教程（73） - OpenAPI回调机制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">1.基础用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%85%8D%E7%BD%AE%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">2.配置验证机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">3.生产环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 多环境配置方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 敏感信息管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4.依赖注入模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%9F%E4%BA%A7%E5%BB%BA%E8%AE%AE"><span class="nav-number">5.</span> <span class="nav-text">5.生产建议</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Denny</p>
+  <div class="site-description" itemprop="description">Denny的博客，技术分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Denny</span>
+</div>
+  <div class="powered-by">
+
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+<script src="/js/mermaid.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'neutral',
+      securityLevel: 'loose'
+    });
+    mermaid.init();
+  });
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
